@@ -1,0 +1,17 @@
+<launch>
+    <!-- Run move_base with the global/local planners and load all parameters from the config files -->
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <param name="/clearing_rotation_allowed" value="false" /> <!-- Disable rotation of robot if stuck somewhere -->
+        
+        <rosparam file="$(find edu_2dnav)/config/costmap_common_params.yaml" command="load" ns="global_costmap" /> <!-- Load common costmap parameters for the global costmap -->
+        <rosparam file="$(find edu_2dnav)/config/costmap_common_params.yaml" command="load" ns="local_costmap" /> <!-- Load common costmap parameters for the local costmap -->
+        <rosparam file="$(find edu_2dnav)/config/local_costmap_params.yaml" command="load" /> <!-- Load local costmap parameters -->
+        <rosparam file="$(find edu_2dnav)/config/global_costmap_params.yaml" command="load" /> <!-- Load global costmap parameters -->
+        <rosparam file="$(find edu_2dnav)/config/base_local_planner_params.yaml" command="load" /> <!-- Load local planner parameters -->
+
+        <param name="base_global_planner" value="global_planner/GlobalPlanner"/> <!-- Set the global planner node to use for global pathplanning -->
+        <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" /> <!-- Set the local planner to use for local pathplanning and navigation-->
+        <param name="controller_frequency" value="50" /> <!-- Set frequency of the control loop (higher = better = more performance needed) -->
+    </node>
+
+</launch> 
