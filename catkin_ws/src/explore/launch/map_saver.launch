@@ -1,0 +1,4 @@
+<launch>
+    <!-- Save Map -->
+    <node pkg="map_server" pkg="map_server" type="map_saver" args="-f ~/catkin_ws/src/explore/maps/map" output="screen"/>
+</launch>
