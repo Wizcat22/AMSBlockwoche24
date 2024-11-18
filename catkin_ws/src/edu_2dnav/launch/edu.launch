@@ -32,7 +32,12 @@
         <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" /> <!-- Set the local planner to use for local pathplanning and navigation-->
         <param name="controller_frequency" value="50" /> <!-- Set frequency of the control loop (higher = better = more performance needed) -->
     </node>
+    
+    <!-- Explore Lite --> 
+    <node pkg="explore_lite" type="explore" respawn="true" name="explore" output="screen">
+        <rosparam file="$(find explore)/config/exploration.yaml" command="load" />
+    </node>
 
     <!-- Explore Lite --> 
-    <node pkg="roslaunch" type="roslaunch" name="explore_launcher" args="$(find explore)/launch/explore.launch"/>
+    <node pkg="roslaunch" type="roslaunch" name="saver_launcher" args="$(find explore)/launch/map_saver.launch"/>
 </launch> 

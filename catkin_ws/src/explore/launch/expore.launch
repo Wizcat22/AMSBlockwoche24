@@ -1,9 +1,0 @@
-<launch>
-    <!-- Explore Lite --> 
-    <node pkg="explore_lite" type="explore" respawn="true" name="explore" output="screen">
-        <rosparam file="$(find explore)/config/exploration.yaml" command="load" />
-    </node>
-    
-    <!-- Post-shutdown launch -->
-    <node pkg="roslaunch" type="roslaunch" name="map_saver_launcher" args="$(find explore)/launch/map_saver.launch"/>
-</launch> 
