@@ -1,0 +1,5 @@
+grabber-controller
+/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel/.private/grabber-controller/cmake.lock /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel/./cmake.lock
+/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel/.private/grabber-controller/lib/pkgconfig/grabber-controller.pc /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel/lib/pkgconfig/grabber-controller.pc
+/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel/.private/grabber-controller/share/grabber-controller/cmake/grabber-controllerConfig.cmake /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel/share/grabber-controller/cmake/grabber-controllerConfig.cmake
+/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel/.private/grabber-controller/share/grabber-controller/cmake/grabber-controllerConfig-version.cmake /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel/share/grabber-controller/cmake/grabber-controllerConfig-version.cmake
