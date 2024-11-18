@@ -1,0 +1,2 @@
+
+-DCATKIN_DEVEL_PREFIX=/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/install -G Unix Makefiles
