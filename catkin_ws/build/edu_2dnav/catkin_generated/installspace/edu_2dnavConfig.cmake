@@ -67,14 +67,14 @@ set(edu_2dnav_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(edu_2dnav_SOURCE_PREFIX /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/src/edu_2dnav)
-  set(edu_2dnav_DEVEL_PREFIX /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel/.private/edu_2dnav)
+  set(edu_2dnav_SOURCE_PREFIX /home/edurob/ams-bw-ws2425/catkin_ws/src/edu_2dnav)
+  set(edu_2dnav_DEVEL_PREFIX /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/edu_2dnav)
   set(edu_2dnav_INSTALL_PREFIX "")
   set(edu_2dnav_PREFIX ${edu_2dnav_DEVEL_PREFIX})
 else()
   set(edu_2dnav_SOURCE_PREFIX "")
   set(edu_2dnav_DEVEL_PREFIX "")
-  set(edu_2dnav_INSTALL_PREFIX /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/install)
+  set(edu_2dnav_INSTALL_PREFIX /home/edurob/ams-bw-ws2425/catkin_ws/install)
   set(edu_2dnav_PREFIX ${edu_2dnav_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/install/lib;/opt/ros/noetic/lib;/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel/lib)
+    foreach(path /home/edurob/ams-bw-ws2425/catkin_ws/install/lib;/home/edurob/ams-bw-ws2425/catkin_ws/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

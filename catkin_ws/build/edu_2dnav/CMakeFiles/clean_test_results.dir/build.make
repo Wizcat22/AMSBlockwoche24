@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/src/edu_2dnav
+CMAKE_SOURCE_DIR = /home/edurob/ams-bw-ws2425/catkin_ws/src/edu_2dnav
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/edu_2dnav
+CMAKE_BINARY_DIR = /home/edurob/ams-bw-ws2425/catkin_ws/build/edu_2dnav
 
 # Utility rule file for clean_test_results.
 
@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/edu_2dnav
 include CMakeFiles/clean_test_results.dir/progress.make
 
 CMakeFiles/clean_test_results:
-	/usr/bin/python3 /opt/ros/noetic/share/catkin/cmake/test/remove_test_results.py /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/edu_2dnav/test_results
+	/usr/bin/python3 /opt/ros/noetic/share/catkin/cmake/test/remove_test_results.py /home/edurob/ams-bw-ws2425/catkin_ws/build/edu_2dnav/test_results
 
 clean_test_results: CMakeFiles/clean_test_results
 clean_test_results: CMakeFiles/clean_test_results.dir/build.make
@@ -71,6 +71,6 @@ CMakeFiles/clean_test_results.dir/clean:
 .PHONY : CMakeFiles/clean_test_results.dir/clean
 
 CMakeFiles/clean_test_results.dir/depend:
-	cd /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/edu_2dnav && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/src/edu_2dnav /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/src/edu_2dnav /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/edu_2dnav /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/edu_2dnav /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/edu_2dnav/CMakeFiles/clean_test_results.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/edurob/ams-bw-ws2425/catkin_ws/build/edu_2dnav && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/edurob/ams-bw-ws2425/catkin_ws/src/edu_2dnav /home/edurob/ams-bw-ws2425/catkin_ws/src/edu_2dnav /home/edurob/ams-bw-ws2425/catkin_ws/build/edu_2dnav /home/edurob/ams-bw-ws2425/catkin_ws/build/edu_2dnav /home/edurob/ams-bw-ws2425/catkin_ws/build/edu_2dnav/CMakeFiles/clean_test_results.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/clean_test_results.dir/depend
 

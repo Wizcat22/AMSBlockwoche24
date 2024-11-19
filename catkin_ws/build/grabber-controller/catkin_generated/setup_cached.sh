@@ -7,7 +7,7 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel/.private/grabber-controller:$CMAKE_PREFIX_PATH"
-export PWD='/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/grabber-controller'
-export ROSLISP_PACKAGE_DIRECTORIES="/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel/.private/grabber-controller/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
-export ROS_PACKAGE_PATH="/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/src/grabber-controller:$ROS_PACKAGE_PATH"
+export CMAKE_PREFIX_PATH="/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/grabber-controller:$CMAKE_PREFIX_PATH"
+export PWD='/home/edurob/ams-bw-ws2425/catkin_ws/build/grabber-controller'
+export ROSLISP_PACKAGE_DIRECTORIES="/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/grabber-controller/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
+export ROS_PACKAGE_PATH="/home/edurob/ams-bw-ws2425/catkin_ws/src/grabber-controller:$ROS_PACKAGE_PATH"

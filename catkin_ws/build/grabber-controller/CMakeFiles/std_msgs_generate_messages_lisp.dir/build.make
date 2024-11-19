@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/src/grabber-controller
+CMAKE_SOURCE_DIR = /home/edurob/ams-bw-ws2425/catkin_ws/src/grabber-controller
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/grabber-controller
+CMAKE_BINARY_DIR = /home/edurob/ams-bw-ws2425/catkin_ws/build/grabber-controller
 
 # Utility rule file for std_msgs_generate_messages_lisp.
 
@@ -67,6 +67,6 @@ CMakeFiles/std_msgs_generate_messages_lisp.dir/clean:
 .PHONY : CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
 
 CMakeFiles/std_msgs_generate_messages_lisp.dir/depend:
-	cd /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/grabber-controller && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/src/grabber-controller /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/src/grabber-controller /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/grabber-controller /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/grabber-controller /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/grabber-controller/CMakeFiles/std_msgs_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/edurob/ams-bw-ws2425/catkin_ws/build/grabber-controller && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/edurob/ams-bw-ws2425/catkin_ws/src/grabber-controller /home/edurob/ams-bw-ws2425/catkin_ws/src/grabber-controller /home/edurob/ams-bw-ws2425/catkin_ws/build/grabber-controller /home/edurob/ams-bw-ws2425/catkin_ws/build/grabber-controller /home/edurob/ams-bw-ws2425/catkin_ws/build/grabber-controller/CMakeFiles/std_msgs_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/std_msgs_generate_messages_lisp.dir/depend
 

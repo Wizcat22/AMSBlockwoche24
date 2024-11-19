@@ -1,1 +1,1 @@
-/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel/.private/grabber-controller/share/grabber-controller/cmake/grabber-controllerConfig.cmake
+/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/grabber-controller/share/grabber-controller/cmake/grabber-controllerConfig.cmake

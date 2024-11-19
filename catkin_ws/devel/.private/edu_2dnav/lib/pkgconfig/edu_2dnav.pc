@@ -1,4 +1,4 @@
-prefix=/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel/.private/edu_2dnav
+prefix=/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/edu_2dnav
 
 Name: edu_2dnav
 Description: Description of edu_2dnav
