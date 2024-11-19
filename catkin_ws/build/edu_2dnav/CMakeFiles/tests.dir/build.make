@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/src/edu_2dnav
+CMAKE_SOURCE_DIR = /home/edurob/ams-bw-ws2425/catkin_ws/src/edu_2dnav
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/edu_2dnav
+CMAKE_BINARY_DIR = /home/edurob/ams-bw-ws2425/catkin_ws/build/edu_2dnav
 
 # Utility rule file for tests.
 
@@ -67,6 +67,6 @@ CMakeFiles/tests.dir/clean:
 .PHONY : CMakeFiles/tests.dir/clean
 
 CMakeFiles/tests.dir/depend:
-	cd /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/edu_2dnav && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/src/edu_2dnav /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/src/edu_2dnav /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/edu_2dnav /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/edu_2dnav /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/build/edu_2dnav/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/edurob/ams-bw-ws2425/catkin_ws/build/edu_2dnav && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/edurob/ams-bw-ws2425/catkin_ws/src/edu_2dnav /home/edurob/ams-bw-ws2425/catkin_ws/src/edu_2dnav /home/edurob/ams-bw-ws2425/catkin_ws/build/edu_2dnav /home/edurob/ams-bw-ws2425/catkin_ws/build/edu_2dnav /home/edurob/ams-bw-ws2425/catkin_ws/build/edu_2dnav/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/tests.dir/depend
 

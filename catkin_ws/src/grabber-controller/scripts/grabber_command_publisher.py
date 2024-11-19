@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
 
 import rospy
-from std_msgs.msg import Float64  # Replace with your message type as needed
+from std_msgs.msg import Float32  # Replace with your message type as needed
 
 def motor_publisher():
     # Initialize the ROS node
     rospy.init_node('motor_command_publisher', anonymous=True)
     # Create a publisher object
-    pub = rospy.Publisher('motor_command', Float64, queue_size=10)
-    rate = rospy.Rate(10)  # 10 Hz
+    pub = rospy.Publisher('motor_cmd', Float32, queue_size=10)
+    rate = rospy.Rate(5)  # 10 Hz
 
-    while not rospy.is_shutdown():
-        command = 1.0  # Replace with the actual command value you want to publish
+    #while not rospy.is_shutdown():
+    for i in range(100):
+        rate.sleep()
+        command = 350.0 if i % 2 == 0 else 270.0
         rospy.loginfo(f"Publishing motor command: {command}")
         pub.publish(command)
-        rate.sleep()
 
 if __name__ == '__main__':
     try:

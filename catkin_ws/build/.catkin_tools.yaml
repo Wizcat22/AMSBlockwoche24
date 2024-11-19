@@ -1,6 +1,6 @@
-devel_space: /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel
+devel_space: /home/edurob/ams-bw-ws2425/catkin_ws/devel
 install: false
-install_space: /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/install
+install_space: /home/edurob/ams-bw-ws2425/catkin_ws/install
 profile: default
-source_space: /home/ams-blockwoche/ams-bw-ws2425/catkin_ws/src
-workspace: /home/ams-blockwoche/ams-bw-ws2425/catkin_ws
+source_space: /home/edurob/ams-bw-ws2425/catkin_ws/src
+workspace: /home/edurob/ams-bw-ws2425/catkin_ws

@@ -1,1 +1,1 @@
-/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel/.private/grabber-controller/lib/pkgconfig/grabber-controller.pc
+/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/grabber-controller/lib/pkgconfig/grabber-controller.pc

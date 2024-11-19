@@ -1,4 +1,4 @@
-prefix=/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/install
+prefix=/home/edurob/ams-bw-ws2425/catkin_ws/install
 
 Name: grabber-controller
 Description: Description of grabber-controller

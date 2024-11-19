@@ -1,4 +1,4 @@
-prefix=/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/install
+prefix=/home/edurob/ams-bw-ws2425/catkin_ws/install
 
 Name: edu_2dnav
 Description: Description of edu_2dnav

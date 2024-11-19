@@ -1,1 +1,1 @@
-/home/ams-blockwoche/ams-bw-ws2425/catkin_ws/devel/.private/edu_2dnav/lib/pkgconfig/edu_2dnav.pc
+/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/edu_2dnav/lib/pkgconfig/edu_2dnav.pc
