@@ -1,0 +1,7 @@
+{
+    "cmake.ignoreCMakeListsMissing": true,
+    "files.associations": {
+        "functional": "cpp",
+        "streambuf": "cpp"
+    }
+}
