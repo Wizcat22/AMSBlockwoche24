@@ -45,11 +45,10 @@
     
     <!-- Explore Lite -->
     <include file="$(find explore_lite)/launch/explore.launch">
-        <rosparam file="$(find explore)/config/exploration.yaml" command="load" />
 	</include>
 
     <node pkg="tf" type="static_transform_publisher" name="laser-frame_broadcaster" args="0 0 0 0 0 0 0 base_link laser-frame 100" />
 
     <!-- Explore Lite --> 
-    <node pkg="roslaunch" type="roslaunch" name="saver_launcher" args="$(find explore)/launch/map_saver.launch"/>
+    <!--    <node pkg="roslaunch" type="roslaunch" name="saver_launcher" args="$(find explore)/launch/map_saver.launch"/> -->
 </launch> 
