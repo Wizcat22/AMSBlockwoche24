@@ -1,0 +1,21 @@
+global_costmap:
+  update_frequency: 20.0
+  publish_frequency: 5.0
+  always_send_full_costmap: true
+  static_map: false
+  rolling_window: false
+  width: 14.0
+  height: 14.0
+  resolution: 0.1
+  track_unknown_space: true
+  static_layer:
+    map_topic: /map
+    subscribe_to_updates: true
+    lethal_cost_threshold: 60
+  inflater_layer:
+    inflation_radius: 0.10  # vorher 0.125
+    cost_scaling_factor: 0.05
+
+  plugins:
+    - { name: static_layer, type: "costmap_2d::StaticLayer" }
+    - { name: inflater_layer, type: "costmap_2d::InflationLayer" }
