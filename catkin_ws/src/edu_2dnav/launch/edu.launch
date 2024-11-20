@@ -43,10 +43,10 @@
         <param name="controller_frequency" value="50" /> <!-- Set frequency of the control loop (higher = better = more performance needed) -->
     </node>
     
-    <!-- Explore Lite --> 
-    <node pkg="explore_lite" type="explore" respawn="true" name="explore_lite" output="screen">
+    <!-- Explore Lite -->
+    <include file="$(find explore_lite)/launch/explore.launch">
         <rosparam file="$(find explore)/config/exploration.yaml" command="load" />
-    </node>
+	</include>
 
     <!-- Explore Lite --> 
     <node pkg="roslaunch" type="roslaunch" name="saver_launcher" args="$(find explore)/launch/map_saver.launch"/>
