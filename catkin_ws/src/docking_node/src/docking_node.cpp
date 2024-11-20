@@ -6,28 +6,31 @@
 #include <chrono>
 #include <thread>
 #include <ros/console.h>
+#include "std_msgs/Bool.h"
 
-// current distant and angle to barrel
-static float current_dist = 1000.f;
-static float current_angle;
 
-static bool got_first_scan = false;
+static float current_dist = 1000.f;                 // aktuelle Distanz zum Barrel
+static float current_angle;                         // akueller Winkel zum Barrel
 
-static float approx_start_dist_barrel = 1000.f;
-int current_init_iter;
+static bool got_first_scan = false;                 // Flag, dass ein erster Scan erkannt wurde
+static bool start_docking = false;                  // Start-Flag
+static float approx_start_dist_barrel = 1000.f;     // wird benötigt, um Scans die nicht das Barrel enthalten zu ignorieren
+int current_init_iter;                              // aktuelle Iteration beim Schätzen der Entfernung zum Barrel
 
-#define NUM_INIT_LOOPS 15
-#define ROT_SPEED 0.15f
-#define TRANSL_SPEED 0.1f
-#define DIST_TO_BARREL_M 0.19
-#define CONTROL_RATE 100
-#define DEG_TO_RAD(x) (x/180.0 * M_PI)
-#define TOLERANCE_TO_BARREL 0.6
-#define ANGLE_TOLERANCE 6
+
+#define NUM_INIT_LOOPS 15                           // Anzahl der Scan Nachrichten die abgewartet werden, um die approx Distanz zum Barrel zu ermitteln
+#define ROT_SPEED 0.3f                              // Rotationsgeschwindigkeit
+#define TRANSL_SPEED 0.12f                          // translatorische Geschwindigkeit
+#define DIST_TO_BARREL_M 0.17                       // Zieldistanz zur Tonne
+#define CONTROL_RATE 100                            // sleep time twischen Controller-Loops
+#define DEG_TO_RAD(x) (x/180.0 * M_PI)              // grad zu radiant
+#define TOLERANCE_TO_BARREL 0.06                    // Toleranz-Wert zum geschätzen Abstand vom Barrel, damit ein Scan noch als relevant eingestuft wird, nicht die Anfahr-Toleranz
+#define ANGLE_TOLERANCE 2                           // Toleranz-Winkel beim Ausrichten
 
 void move_to_barrel(ros::Publisher& pub){
     geometry_msgs::Twist msg;
     ros::Rate ctrl_rate(CONTROL_RATE);
+    msg.angular.z = 0.f;
     msg.linear.x = -TRANSL_SPEED;
     pub.publish(msg);
     ctrl_rate.sleep();
@@ -37,20 +40,27 @@ void move_to_barrel(ros::Publisher& pub){
 void correct_attitude(ros::Publisher& pub){
     geometry_msgs::Twist msg;
     ros::Rate ctrl_rate(CONTROL_RATE);
-        msg.linear.x = 0.f;
-        msg.linear.y = 0.f;
-        if(current_angle < 0.0){
-            msg.angular.z = ROT_SPEED;
-        } else {
-            msg.angular.z = -ROT_SPEED;
-        }
-        pub.publish(msg);
-        ctrl_rate.sleep();
-        ros::spinOnce();
+    msg.linear.x = 0.f;
+    msg.linear.y = 0.f;
+    if(current_angle < 0.0){
+        msg.angular.z = ROT_SPEED;
+    } else {
+        msg.angular.z = -ROT_SPEED;
+    }
+    pub.publish(msg);
+    ctrl_rate.sleep();
+    ros::spinOnce();
+}
+
+void starter_callback(const std_msgs::Bool::ConstPtr& start_flag){
+    ROS_INFO("Received Starting-Flag.");
+    start_docking = start_flag->data;
 }
 
 void raw_laser_callback(const sensor_msgs::LaserScan::ConstPtr& scan_in)
-{
+{   
+    // zunächst werden NUM_INIT_LOOPS Scans abgewartet, um den Abstand zum Barrel zu schätzen 
+    // und irrelevante Scans ohne das Barrel anhand dessen ausschließen zu können
     if(current_init_iter < NUM_INIT_LOOPS){
         float min_of_all_scans = scan_in->ranges[0];
         for (size_t i = 0; i < scan_in->ranges.size(); ++i) {
@@ -66,7 +76,9 @@ void raw_laser_callback(const sensor_msgs::LaserScan::ConstPtr& scan_in)
         return;
     }
 
-    ROS_INFO("Got new raw_scan");
+    ROS_DEBUG("Got new raw_scan");
+
+    // der minimale Abstand wird aus allen scans gesucht
     float min_of_all_scans = scan_in->ranges[0];
     for (size_t i = 0; i < scan_in->ranges.size(); ++i) {
         float range = scan_in->ranges[i];
@@ -76,63 +88,76 @@ void raw_laser_callback(const sensor_msgs::LaserScan::ConstPtr& scan_in)
         }
     }
 
+    // der gefundene Werte muss abzüglich Toleranz kleiner sein als der geschätze Abstand
+    // zum Barrel. Ansonsten war das Barrel nicht im Blickfeld.
     if(min_of_all_scans < approx_start_dist_barrel + TOLERANCE_TO_BARREL){
         current_dist = min_of_all_scans;
         got_first_scan = true;
     }
-    ROS_INFO("Current distance: %f", current_dist);
-    ROS_INFO("Current angle: %f", current_angle);
+
+    ROS_DEBUG("Current distance: %f", current_dist);
+    ROS_DEBUG("Current angle: %f", current_angle);
 }
 
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "docking_node");
-    ROS_INFO("Staring Docking_Node");
-    
     ros::NodeHandle nh;
 
-    ros::Subscriber sub = nh.subscribe("/raw_scan", 1000, raw_laser_callback);
+    ros::Subscriber sub_scan = nh.subscribe("/raw_scan", 1000, raw_laser_callback);
+    ros::Subscriber sub_action = nh.subscribe("/docking_node/start", 5, starter_callback);
     ros::Publisher pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
+    
+    ROS_INFO("Wating for Starter-Flag");
+    ros::Rate loop_wait_flag(20);
+    while(!start_docking){
+        loop_wait_flag.sleep();
+        ros::spinOnce();
+    }
+    ROS_INFO("Staring Docking_Node");
+
     ros::Rate loop_rate(20);
     while(!got_first_scan){
         loop_rate.sleep();
         ros::spinOnce();
     }
-    ROS_INFO("Starting to rotate..");
+
     ros::Rate ctrl_rate(CONTROL_RATE);
-    while(std::fabs(current_dist) > DIST_TO_BARREL_M || std::fabs(std::fabs(current_angle) - M_PI) > DEG_TO_RAD(ANGLE_TOLERANCE)){
+    while((std::fabs(current_dist) > DIST_TO_BARREL_M || std::fabs(std::fabs(current_angle) - M_PI) > DEG_TO_RAD(ANGLE_TOLERANCE)) && ros::ok()){
+        // zum Barrel Drehen
         while(std::fabs(std::fabs(current_angle) - M_PI) > DEG_TO_RAD(ANGLE_TOLERANCE) && ros::ok()){
-            // if(current_angle > M_PI){
-            //     msg.linear.x = 0.f;
-            //     msg.linear.y = 0.f;
-            //     msg.angular.z = ROT_SPEED;
-            // } else {
-            //     msg.angular.z = -ROT_SPEED;
-            // }
-            // pub.publish(msg);
-            // ctrl_rate.sleep();
-            // ros::spinOnce();
             correct_attitude(pub);
         }
-        ROS_INFO("Startint to move towards barrel");
-        // std::fabs(current_dist) > DIST_TO_BARREL_M && std::fabs(std::fabs(current_angle) - M_PI) > DEG_TO_RAD(ANGLE_TOLERANCE) &&ros::ok()
+
+        // auf Barrel zufahren
         while(std::fabs(current_dist) > DIST_TO_BARREL_M && ros::ok()){
             move_to_barrel(pub);
             if(std::fabs(std::fabs(current_angle) - M_PI) > DEG_TO_RAD(ANGLE_TOLERANCE)){
                 break;
             }
-            // msg.linear.x = -TRANSL_SPEED;
-            // pub.publish(msg);
-            // ctrl_rate.sleep();
-            // ros::spinOnce();
         }
     }
+
+    //Stehenbleiben, sobald ausgerichtet
     geometry_msgs::Twist msg;
     msg.linear.x = 0.f;
     msg.linear.y = 0.f;
     msg.angular.z = 0.f;
-    pub.publish(msg);
+    
+    ros::Rate stop_rate(100);
+    
+    // einmaliges Senden hat nicht immer gereicht
+    for(int i = 0; i < 5; i++){
+        pub.publish(msg);
+        stop_rate.sleep();
+        ros::spinOnce();
+    }
+    
     ROS_INFO("Done!");
+
+    // \todo Publish Gripper Message
+    // \todo Await Force Feedback
+    // \todo Send Home Goal To Move_Base Action Server
 
     return 0;
 }
