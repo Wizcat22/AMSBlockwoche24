@@ -11,10 +11,15 @@
 		<arg name="port" value="/dev/ttyACM0"/>
 	</include>
 	
-	<!-- Starte iris_lama_ros für 2D-SLAM -->
+	<!-- Starte iris_lama_ros oder gmapping für 2D-SLAM -->
 	<group if="$(eval arg('mapping') == 'lama')">
 		<node name="slam2d_node" pkg="iris_lama_ros" type="slam2d_ros" output="screen">
 			<param name="scan_topic" type="string" value="scan"/>
+		</node>
+	</group>
+	<group if="$(eval arg('mapping') == 'gmapping')">
+		<node name="slam2d_node" pkg="gmapping" type="slam_gmapping" output="screen">
+			<param name="scan" type="string" value="scan"/>
 		</node>
 	</group>
 
