@@ -44,7 +44,7 @@
     </node>
     
     <!-- Explore Lite --> 
-    <node pkg="explore_lite" type="explore" respawn="true" name="explore" output="screen">
+    <node pkg="explore_lite" type="explore" respawn="true" name="explore_lite" output="screen">
         <rosparam file="$(find explore)/config/exploration.yaml" command="load" />
     </node>
 
