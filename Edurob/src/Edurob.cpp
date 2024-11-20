@@ -413,7 +413,13 @@ void setTfStaticData()
 	messageTfStatic.transforms_length = 1;
 	messageTfStatic.transforms = &tfStaticData;
 }
-#endif ROS_EN
+#endif // ROS_EN
+
+void initGrabberTopics()
+{
+    nh.subscribe(grabber_angle_sub);
+    nh.advertise(feedback_pub);
+}
 
 // Setup
 void setup()
@@ -434,22 +440,20 @@ void setup()
 		5,					   /* Priority of the task. */
 		NULL);				   /* Task handle. */
 
-	xTaskCreate(
-		loggerTask,	  /* Task function. */
-		"loggerTask", /* String with name of task. */
-		20000,		  /* Stack size in bytes. */
-		NULL,		  /* Parameter passed as input of the task */
-		1,			  /* Priority of the task. */
-		NULL);		  /* Task handle. */
+	//xTaskCreate(
+	//	loggerTask,	  /* Task function. */
+	//	"loggerTask", /* String with name of task. */
+	//	10000,		  /* Stack size in bytes. */
+	//	NULL,		  /* Parameter passed as input of the task */
+	//	1,			  /* Priority of the task. */
+	//	NULL);		  /* Task handle. */
 
 #ifdef ROS_EN
 	nh.initNode();
 	nh.advertise(tf_pub);
 	nh.advertise(tf_static_pub);
 	nh.subscribe(sub);
-
-	// Init Grabber Topic	
-	nh.subscribe(grabber_angle_sub);
+	initGrabberTopics();
 #endif // ROS_EN
 }
 
