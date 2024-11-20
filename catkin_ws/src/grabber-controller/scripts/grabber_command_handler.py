@@ -40,16 +40,16 @@ class GrabberController:
         self.command = msg.data.lower()
 
     def run(self):
-         while not rospy.is_shutdown():
-            # Generate a command based on feedback
-            command = self.compute_command()
-            rospy.loginfo(f"Publishing command: {command}")
+        while not rospy.is_shutdown():
+        # Generate a command based on feedback
+        command = self.compute_command()
+        rospy.loginfo(f"Publishing command: {command}")
 
-            if command != 0.0:
-                self.pub.publish(command)
+        if command != 0.0:
+            self.pub.publish(command)
 
-            # Sleep to maintain loop rate
-            self.rate.sleep()
+        # Sleep to maintain loop rate
+        self.rate.sleep()
 
 if __name__ == '__main__':
     try:
