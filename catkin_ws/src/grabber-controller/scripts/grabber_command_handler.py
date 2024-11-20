@@ -3,22 +3,61 @@
 import rospy
 from std_msgs.msg import Float32  # Replace with your message type as needed
 
-def motor_publisher():
-    # Initialize the ROS node
-    rospy.init_node('motor_command_publisher', anonymous=True)
-    # Create a publisher object
-    pub = rospy.Publisher('motor_cmd', Float32, queue_size=10)
-    rate = rospy.Rate(5)  # 10 Hz
+class GrabberController:
+    def __init__(self):
+        # Initialize the ROS node
+        rospy.init_node('motor_command_publisher', anonymous=True)
 
-    #while not rospy.is_shutdown():
-    for i in range(100):
-        rate.sleep()
-        command = 350.0 if i % 2 == 0 else 270.0
-        rospy.loginfo(f"Publishing motor command: {command}")
-        pub.publish(command)
+        # Create a publisher object for the grabber
+        pub = rospy.Publisher('grabber/angle', Float32, queue_size=10)
+
+        # Create a subscriber object for force feedback
+        rospy.Subscriber('grabber/feedback', Float32, self.feedback_callback)
+
+        # Create a subscriber object to listen for commands
+        rospy.Subscriber('grabber/command', String, self.handle_command)
+
+        self.rate = rospy.Rate(10)  # 10 Hz
+
+        # Working variables
+        self.force_feedback = 0.0
+        self.command = None
+
+    def feedback_callback(self, msg) {
+        # Process force feedback
+        self.force_feedback = msg.data
+        rospy.loginfo(f"Received force feedback: {self.force_feedback}")
+    }
+
+    def compute_command(self) {
+        if self.command == "open":
+            return 350.0
+        else self.command == "close":
+            return 270.0
+        else:
+            return 0.0
+    }
+
+    def handle_command(self, msg) {
+        self.command = msg.data.lower()
+    }
+
+    def run(self) {
+         while not rospy.is_shutdown():
+            # Generate a command based on feedback
+            command = self.compute_command()
+            rospy.loginfo(f"Publishing command: {command}")
+
+            if command != 0.0:
+                self.pub.publish(command)
+
+            # Sleep to maintain loop rate
+            self.rate.sleep()
+    }
 
 if __name__ == '__main__':
     try:
-        motor_publisher()
+        controller = GrabberController()
+        controller.run()
     except rospy.ROSInterruptException:
         pass
