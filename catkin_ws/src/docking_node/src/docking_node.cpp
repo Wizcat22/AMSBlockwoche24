@@ -16,7 +16,8 @@ static bool got_first_scan = false;                 // Flag, dass ein erster Sca
 static bool start_docking = false;                  // Start-Flag
 static float approx_start_dist_barrel = 1000.f;     // wird benötigt, um Scans die nicht das Barrel enthalten zu ignorieren
 int current_init_iter;                              // aktuelle Iteration beim Schätzen der Entfernung zum Barrel
-
+bool prev_cmd_was_move = false;                     // Durch die beiden Boolean wird das unnötige Senden gleicher Twist Nachrichten verhindert
+bool prev_cmd_was_rot = false;                      // es werden zwei bool gebraucht, um auch den Start-Fall abzudecken
 
 #define NUM_INIT_LOOPS 15                           // Anzahl der Scan Nachrichten die abgewartet werden, um die approx Distanz zum Barrel zu ermitteln
 #define ROT_SPEED 0.3f                              // Rotationsgeschwindigkeit
@@ -28,26 +29,34 @@ int current_init_iter;                              // aktuelle Iteration beim S
 #define ANGLE_TOLERANCE 2                           // Toleranz-Winkel beim Ausrichten
 
 void move_to_barrel(ros::Publisher& pub){
-    geometry_msgs::Twist msg;
-    ros::Rate ctrl_rate(CONTROL_RATE);
-    msg.angular.z = 0.f;
-    msg.linear.x = -TRANSL_SPEED;
-    pub.publish(msg);
+    if(!prev_cmd_was_move || prev_cmd_was_rot){
+        geometry_msgs::Twist msg;
+        ros::Rate ctrl_rate(CONTROL_RATE);
+        msg.angular.z = 0.f;
+        msg.linear.x = -TRANSL_SPEED;
+        pub.publish(msg);
+        prev_cmd_was_move = true;
+        prev_cmd_was_rot = false;
+    }
     ctrl_rate.sleep();
     ros::spinOnce();
 }
 
 void correct_attitude(ros::Publisher& pub){
-    geometry_msgs::Twist msg;
-    ros::Rate ctrl_rate(CONTROL_RATE);
-    msg.linear.x = 0.f;
-    msg.linear.y = 0.f;
-    if(current_angle < 0.0){
-        msg.angular.z = ROT_SPEED;
-    } else {
-        msg.angular.z = -ROT_SPEED;
-    }
-    pub.publish(msg);
+    if(prev_cmd_was_move || !prev_cmd_was_rot){    
+        geometry_msgs::Twist msg;
+        ros::Rate ctrl_rate(CONTROL_RATE);
+        msg.linear.x = 0.f;
+        msg.linear.y = 0.f;
+        if(current_angle < 0.0){
+            msg.angular.z = ROT_SPEED;
+        } else {
+            msg.angular.z = -ROT_SPEED;
+        }
+        pub.publish(msg);
+        prev_cmd_was_move = false;
+        prev_cmd_was_rot = true;
+    }    
     ctrl_rate.sleep();
     ros::spinOnce();
 }
