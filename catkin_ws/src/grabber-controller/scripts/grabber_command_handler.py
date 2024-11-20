@@ -31,7 +31,7 @@ class GrabberController:
     def compute_command(self):
         if self.command == "open":
             return 350.0
-        else self.command == "close":
+        elif self.command == "close":
             return 270.0
         else:
             return 0.0
