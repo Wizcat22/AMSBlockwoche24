@@ -23,26 +23,23 @@ class GrabberController:
         self.force_feedback = 0.0
         self.command = None
 
-    def feedback_callback(self, msg) {
+    def feedback_callback(self, msg):
         # Process force feedback
         self.force_feedback = msg.data
         rospy.loginfo(f"Received force feedback: {self.force_feedback}")
-    }
 
-    def compute_command(self) {
+    def compute_command(self):
         if self.command == "open":
             return 350.0
         else self.command == "close":
             return 270.0
         else:
             return 0.0
-    }
 
-    def handle_command(self, msg) {
+    def handle_command(self, msg):
         self.command = msg.data.lower()
-    }
 
-    def run(self) {
+    def run(self):
          while not rospy.is_shutdown():
             # Generate a command based on feedback
             command = self.compute_command()
@@ -53,7 +50,6 @@ class GrabberController:
 
             # Sleep to maintain loop rate
             self.rate.sleep()
-    }
 
 if __name__ == '__main__':
     try:
