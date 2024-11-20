@@ -1,18 +1,19 @@
 <launch>
-    <arg name="a1"/>
-	<arg name="mapping"/>
+    <!-- <arg name="a1"/>
+	<arg name="mapping"/> -->
 	
 	<!-- Starte rplidar_a1.launch aus rplidar_ros -->
-	<include if="$(arg a1)" file="$(find rplidar_ros)/launch/rplidar_a1.launch"/>
-	<include unless="$(arg a1)" file="$(find rplidar_ros)/launch/rplidar.launch"/>
-	
+	<!-- <include if="$(arg a1)" file="$(find rplidar_ros)/launch/rplidar_a1.launch"/>
+	<include unless="$(arg a1)" file="$(find rplidar_ros)/launch/rplidar.launch"/> -->
+	<include file="$(find rplidar_ros)/launch/rplidar_a1.launch"/>
+
 	<!-- Starte den rosserial_server -->
 	<include file="$(find rosserial_server)/launch/serial.launch">
 		<arg name="port" value="/dev/ttyACM0"/>
 	</include>
 	
 	<!-- Starte iris_lama_ros oder gmapping für 2D-SLAM -->
-	<group if="$(eval arg('mapping') == 'lama')">
+	<!-- <group if="$(eval arg('mapping') == 'lama')">
 		<node name="slam2d_node" pkg="iris_lama_ros" type="slam2d_ros" output="screen">
 			<param name="scan_topic" type="string" value="scan"/>
 		</node>
@@ -21,7 +22,11 @@
 		<node name="slam2d_node" pkg="gmapping" type="slam_gmapping" output="screen">
 			<param name="scan" type="string" value="scan"/>
 		</node>
-	</group>
+	</group> -->
+
+    <node name="slam2d_node" pkg="gmapping" type="slam_gmapping" output="screen">
+        <param name="scan" type="string" value="scan"/>
+    </node>
 
     <!-- Run move_base with the global/local planners and load all parameters from the config files -->
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
