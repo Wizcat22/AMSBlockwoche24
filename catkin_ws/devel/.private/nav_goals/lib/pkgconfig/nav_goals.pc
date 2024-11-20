@@ -1,0 +1,8 @@
+prefix=/home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/.private/nav_goals
+
+Name: nav_goals
+Description: Description of nav_goals
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

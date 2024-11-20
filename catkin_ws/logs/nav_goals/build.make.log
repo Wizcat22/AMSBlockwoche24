@@ -1,0 +1,4 @@
+[35m[1mScanning dependencies of target nav_goals[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/nav_goals.dir/nav_goals.cpp.o[0m
+[100%] [32m[1mLinking CXX executable /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/.private/nav_goals/lib/nav_goals/nav_goals[0m
+[100%] Built target nav_goals

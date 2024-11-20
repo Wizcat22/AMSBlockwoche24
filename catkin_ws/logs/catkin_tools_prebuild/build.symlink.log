@@ -1,0 +1,46 @@
+Symlinking /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/./cmake.lock
+Symlinking /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/./local_setup.zsh
+Symlinking /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/./local_setup.bash
+Symlinking /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/./local_setup.sh
+Symlinking /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/./setup.sh
+Symlinking /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/./setup.bash
+Symlinking /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/./env.sh
+Symlinking /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/./_setup_util.py
+Symlinking /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/./setup.zsh
+Symlinking /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/lib/pkgconfig/catkin_tools_prebuild.pc
+Symlinking /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig-version.cmake
+Symlinking /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig.cmake
+Cleaning: (/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/catkin_tools_prebuild/setup.bash, /home/edurob/ams-bw-ws2425/catkin_ws/devel/./setup.bash)
+Cleaning: (/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/catkin_tools_prebuild/setup.zsh, /home/edurob/ams-bw-ws2425/catkin_ws/devel/./setup.zsh)
+Cleaning: (/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/catkin_tools_prebuild/setup.sh, /home/edurob/ams-bw-ws2425/catkin_ws/devel/./setup.sh)
+Cleaning: (/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/catkin_tools_prebuild/cmake.lock, /home/edurob/ams-bw-ws2425/catkin_ws/devel/./cmake.lock)
+Cleaning: (/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/catkin_tools_prebuild/local_setup.bash, /home/edurob/ams-bw-ws2425/catkin_ws/devel/./local_setup.bash)
+Cleaning: (/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/catkin_tools_prebuild/local_setup.sh, /home/edurob/ams-bw-ws2425/catkin_ws/devel/./local_setup.sh)
+Cleaning: (/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/catkin_tools_prebuild/local_setup.zsh, /home/edurob/ams-bw-ws2425/catkin_ws/devel/./local_setup.zsh)
+Cleaning: (/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/catkin_tools_prebuild/env.sh, /home/edurob/ams-bw-ws2425/catkin_ws/devel/./env.sh)
+Cleaning: (/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/catkin_tools_prebuild/_setup_util.py, /home/edurob/ams-bw-ws2425/catkin_ws/devel/./_setup_util.py)
+Cleaning: (/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/catkin_tools_prebuild/lib/pkgconfig/catkin_tools_prebuild.pc, /home/edurob/ams-bw-ws2425/catkin_ws/devel/lib/pkgconfig/catkin_tools_prebuild.pc)
+Cleaning: (/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/catkin_tools_prebuild/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig-version.cmake, /home/edurob/ams-bw-ws2425/catkin_ws/devel/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig-version.cmake)
+Cleaning: (/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/catkin_tools_prebuild/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig.cmake, /home/edurob/ams-bw-ws2425/catkin_ws/devel/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig.cmake)
+Unlinking: /home/edurob/ams-bw-ws2425/catkin_ws/devel/./setup.bash
+Already unlinked: {}
+Unlinking: /home/edurob/ams-bw-ws2425/catkin_ws/devel/./setup.zsh
+Already unlinked: {}
+Unlinking: /home/edurob/ams-bw-ws2425/catkin_ws/devel/./setup.sh
+Already unlinked: {}
+Unlinking: /home/edurob/ams-bw-ws2425/catkin_ws/devel/./local_setup.bash
+Already unlinked: {}
+Unlinking: /home/edurob/ams-bw-ws2425/catkin_ws/devel/./local_setup.sh
+Already unlinked: {}
+Unlinking: /home/edurob/ams-bw-ws2425/catkin_ws/devel/./local_setup.zsh
+Already unlinked: {}
+Unlinking: /home/edurob/ams-bw-ws2425/catkin_ws/devel/./env.sh
+Already unlinked: {}
+Unlinking: /home/edurob/ams-bw-ws2425/catkin_ws/devel/./_setup_util.py
+Already unlinked: {}
+Unlinking: /home/edurob/ams-bw-ws2425/catkin_ws/devel/lib/pkgconfig/catkin_tools_prebuild.pc
+Already unlinked: {}
+Unlinking: /home/edurob/ams-bw-ws2425/catkin_ws/devel/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig-version.cmake
+Already unlinked: {}
+Unlinking: /home/edurob/ams-bw-ws2425/catkin_ws/devel/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig.cmake
+Already unlinked: {}

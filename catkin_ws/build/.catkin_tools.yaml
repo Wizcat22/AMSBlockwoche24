@@ -1,0 +1,6 @@
+devel_space: /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel
+install: false
+install_space: /home/ams-notebook/ams-bw-ws2425/catkin_ws/install
+profile: default
+source_space: /home/ams-notebook/ams-bw-ws2425/catkin_ws/src
+workspace: /home/ams-notebook/ams-bw-ws2425/catkin_ws

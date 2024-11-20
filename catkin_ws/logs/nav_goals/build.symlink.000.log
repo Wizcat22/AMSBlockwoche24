@@ -1,0 +1,4 @@
+Symlinking /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/lib/pkgconfig/nav_goals.pc
+Symlinking /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/lib/nav_goals/nav_goals
+Symlinking /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/share/nav_goals/cmake/nav_goalsConfig-version.cmake
+Symlinking /home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/share/nav_goals/cmake/nav_goalsConfig.cmake

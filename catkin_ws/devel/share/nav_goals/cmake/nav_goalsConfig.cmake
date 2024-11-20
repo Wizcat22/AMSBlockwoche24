@@ -1,0 +1,1 @@
+/home/ams-notebook/ams-bw-ws2425/catkin_ws/devel/.private/nav_goals/share/nav_goals/cmake/nav_goalsConfig.cmake
