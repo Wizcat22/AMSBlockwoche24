@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import rospy
-from std_msgs.msg import Float32  # Replace with your message type as needed
+from std_msgs.msg import Float32, String
 
 class GrabberController:
     def __init__(self):
@@ -41,15 +41,15 @@ class GrabberController:
 
     def run(self):
         while not rospy.is_shutdown():
-        # Generate a command based on feedback
-        command = self.compute_command()
-        rospy.loginfo(f"Publishing command: {command}")
+            # Generate a command based on feedback
+            command = self.compute_command()
+            rospy.loginfo(f"Publishing command: {command}")
 
-        if command != 0.0:
-            self.pub.publish(command)
+            if command != 0.0:
+                self.pub.publish(command)
 
-        # Sleep to maintain loop rate
-        self.rate.sleep()
+            # Sleep to maintain loop rate
+            self.rate.sleep()
 
 if __name__ == '__main__':
     try:
