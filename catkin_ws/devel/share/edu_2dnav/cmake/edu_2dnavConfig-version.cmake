@@ -1,0 +1,1 @@
+/home/edurob/obstacle_detection4/catkin_ws/devel/.private/edu_2dnav/share/edu_2dnav/cmake/edu_2dnavConfig-version.cmake
