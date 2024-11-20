@@ -29,9 +29,9 @@ bool prev_cmd_was_rot = false;                      // es werden zwei bool gebra
 #define ANGLE_TOLERANCE 2                           // Toleranz-Winkel beim Ausrichten
 
 void move_to_barrel(ros::Publisher& pub){
+    ros::Rate ctrl_rate(CONTROL_RATE);
     if(!prev_cmd_was_move || prev_cmd_was_rot){
         geometry_msgs::Twist msg;
-        ros::Rate ctrl_rate(CONTROL_RATE);
         msg.angular.z = 0.f;
         msg.linear.x = -TRANSL_SPEED;
         pub.publish(msg);
@@ -43,9 +43,9 @@ void move_to_barrel(ros::Publisher& pub){
 }
 
 void correct_attitude(ros::Publisher& pub){
+    ros::Rate ctrl_rate(CONTROL_RATE);
     if(prev_cmd_was_move || !prev_cmd_was_rot){    
         geometry_msgs::Twist msg;
-        ros::Rate ctrl_rate(CONTROL_RATE);
         msg.linear.x = 0.f;
         msg.linear.y = 0.f;
         if(current_angle < 0.0){
