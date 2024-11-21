@@ -25,7 +25,7 @@
 	</group> -->
 
     <node name="gmapping" pkg="gmapping" type="slam_gmapping" output="screen">
-        <param name="scan" type="string" value="/laser/scan"/>
+        <remap from="scan" to="/laser/scan"/>
     </node>
 
     <!-- Run move_base with the global/local planners and load all parameters from the config files -->
