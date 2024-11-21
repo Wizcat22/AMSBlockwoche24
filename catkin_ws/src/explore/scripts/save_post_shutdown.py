@@ -6,7 +6,7 @@ from threading import Timer
 import subprocess
 import os
 # Timeout in Sekunden 
-TIMEOUT = 5.0 
+TIMEOUT = 10.0 
 
 def save_map():
     rospy.loginfo("Saving map!")
