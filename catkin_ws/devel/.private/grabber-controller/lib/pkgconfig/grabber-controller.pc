@@ -1,8 +1,0 @@
-prefix=/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/grabber-controller
-
-Name: grabber-controller
-Description: Description of grabber-controller
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

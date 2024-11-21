@@ -1,4 +1,0 @@
-[35m[1mScanning dependencies of target docking_node[0m
-[ 50%] [32mBuilding CXX object CMakeFiles/docking_node.dir/src/docking_node.cpp.o[0m
-[100%] [32m[1mLinking CXX executable /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/docking_node/lib/docking_node/docking_node[0m
-[100%] Built target docking_node

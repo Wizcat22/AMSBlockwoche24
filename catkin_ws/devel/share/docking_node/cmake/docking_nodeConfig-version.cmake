@@ -1,1 +1,0 @@
-/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/docking_node/share/docking_node/cmake/docking_nodeConfig-version.cmake

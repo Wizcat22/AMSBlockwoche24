@@ -11,3 +11,6 @@ Thumbs.db
 .vscode/launch.json
 .vscode/ipch
 Grabber/.vscode/c_cpp_properties.json
+catkin_ws/build/*
+catkin_ws/devel/*
+catkin_ws/logs/*

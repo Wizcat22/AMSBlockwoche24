@@ -1,8 +1,0 @@
-prefix=/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/docking_node
-
-Name: docking_node
-Description: Description of docking_node
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
