@@ -299,7 +299,7 @@ void Explore::stop()
   std_msgs::String msg;
 
   std::stringstream ss;
-  ss << "Exploration stopped." << count;
+  ss << "Exploration stopped.";
   msg.data = ss.str();
   log_pub.publish(msg);
 }
