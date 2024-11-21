@@ -1,0 +1,33 @@
+[35m[1mScanning dependencies of target docking_node[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/docking_node.dir/src/docking_node.cpp.o[0m
+[01m[K/home/edurob/ams-bw-ws2425/catkin_ws/src/docking_node/src/docking_node.cpp:35:39:[m[K [01;31m[Kerror: [m[K‘[01m[Kmove_base_msgs[m[K’ was not declared in this scope
+   35 | typedef actionlib::SimpleActionClient<[01;31m[Kmove_base_msgs[m[K::MoveBaseAction> MoveBaseClient;
+      |                                       [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/edurob/ams-bw-ws2425/catkin_ws/src/docking_node/src/docking_node.cpp:35:69:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   35 | typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction[01;31m[K>[m[K MoveBaseClient;
+      |                                                                     [01;31m[K^[m[K
+[01m[K/home/edurob/ams-bw-ws2425/catkin_ws/src/docking_node/src/docking_node.cpp:[m[K In function ‘[01m[Kint main(int, char**)[m[K’:
+[01m[K/home/edurob/ams-bw-ws2425/catkin_ws/src/docking_node/src/docking_node.cpp:184:40:[m[K [01;31m[Kerror: [m[Kexpression list treated as compound expression in initializer [[01;31m[K-fpermissive[m[K]
+  184 |     MoveBaseClient ac("move_base", true[01;31m[K)[m[K;
+      |                                        [01;31m[K^[m[K
+[01m[K/home/edurob/ams-bw-ws2425/catkin_ws/src/docking_node/src/docking_node.cpp:186:15:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[KwaitForServer[m[K’ in ‘[01m[Kac[m[K’, which is of non-class type ‘[01m[KMoveBaseClient[m[K’ {aka ‘[01m[Kint[m[K’}
+  186 |     while(!ac.[01;31m[KwaitForServer[m[K(ros::Duration(5.0))){
+      |               [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/edurob/ams-bw-ws2425/catkin_ws/src/docking_node/src/docking_node.cpp:189:5:[m[K [01;31m[Kerror: [m[K‘[01m[Kmove_base_msgs[m[K’ has not been declared
+  189 |     [01;31m[Kmove_base_msgs[m[K::MoveBaseGoal goal;
+      |     [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/edurob/ams-bw-ws2425/catkin_ws/src/docking_node/src/docking_node.cpp:191:5:[m[K [01;31m[Kerror: [m[K‘[01m[Kgoal[m[K’ was not declared in this scope
+  191 |     [01;31m[Kgoal[m[K.target_pose.header.frame_id = "map";
+      |     [01;31m[K^~~~[m[K
+[01m[K/home/edurob/ams-bw-ws2425/catkin_ws/src/docking_node/src/docking_node.cpp:197:8:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[KsendGoal[m[K’ in ‘[01m[Kac[m[K’, which is of non-class type ‘[01m[KMoveBaseClient[m[K’ {aka ‘[01m[Kint[m[K’}
+  197 |     ac.[01;31m[KsendGoal[m[K(goal);
+      |        [01;31m[K^~~~~~~~[m[K
+[01m[K/home/edurob/ams-bw-ws2425/catkin_ws/src/docking_node/src/docking_node.cpp:198:8:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[KwaitForResult[m[K’ in ‘[01m[Kac[m[K’, which is of non-class type ‘[01m[KMoveBaseClient[m[K’ {aka ‘[01m[Kint[m[K’}
+  198 |     ac.[01;31m[KwaitForResult[m[K();
+      |        [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/edurob/ams-bw-ws2425/catkin_ws/src/docking_node/src/docking_node.cpp:199:11:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[KgetState[m[K’ in ‘[01m[Kac[m[K’, which is of non-class type ‘[01m[KMoveBaseClient[m[K’ {aka ‘[01m[Kint[m[K’}
+  199 |     if(ac.[01;31m[KgetState[m[K() == actionlib::SimpleClientGoalState::SUCCEEDED)
+      |           [01;31m[K^~~~~~~~[m[K
+make[2]: *** [CMakeFiles/docking_node.dir/build.make:63: CMakeFiles/docking_node.dir/src/docking_node.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:176: CMakeFiles/docking_node.dir/all] Error 2
+make: *** [Makefile:141: all] Error 2

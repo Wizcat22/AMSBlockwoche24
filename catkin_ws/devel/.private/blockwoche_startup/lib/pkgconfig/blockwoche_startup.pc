@@ -1,0 +1,8 @@
+prefix=/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/blockwoche_startup
+
+Name: blockwoche_startup
+Description: Description of blockwoche_startup
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

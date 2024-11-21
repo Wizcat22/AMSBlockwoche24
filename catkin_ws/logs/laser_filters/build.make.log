@@ -1,0 +1,57 @@
+[35m[1mScanning dependencies of target laser_filters_nodelets[0m
+[  3%] [32mBuilding CXX object CMakeFiles/laser_filters_nodelets.dir/src/scan_to_cloud_filter_chain.cpp.o[0m
+[  6%] [32mBuilding CXX object CMakeFiles/laser_filters_nodelets.dir/src/scan_to_scan_filter_chain.cpp.o[0m
+[35m[1mScanning dependencies of target scan_to_cloud_filter_chain[0m
+[ 10%] [32mBuilding CXX object CMakeFiles/scan_to_cloud_filter_chain.dir/src/scan_to_cloud_filter_chain.cpp.o[0m
+[35m[1mScanning dependencies of target laser_filters_gencfg[0m
+[ 13%] [34m[1mGenerating dynamic reconfigure files from cfg/IntensityFilter.cfg: /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/include/laser_filters/IntensityFilterConfig.h /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/lib/python3/dist-packages/laser_filters/cfg/IntensityFilterConfig.py[0m
+Generating reconfiguration files for IntensityFilter in laser_filters
+Wrote header file in /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/include/laser_filters/IntensityFilterConfig.h
+[ 17%] [34m[1mGenerating dynamic reconfigure files from cfg/PolygonFilter.cfg: /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/include/laser_filters/PolygonFilterConfig.h /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/lib/python3/dist-packages/laser_filters/cfg/PolygonFilterConfig.py[0m
+Generating reconfiguration files for PolygonFilter in laser_filters
+Wrote header file in /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/include/laser_filters/PolygonFilterConfig.h
+[ 20%] [34m[1mGenerating dynamic reconfigure files from cfg/RangeFilter.cfg: /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/include/laser_filters/RangeFilterConfig.h /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/lib/python3/dist-packages/laser_filters/cfg/RangeFilterConfig.py[0m
+Generating reconfiguration files for RangeFilter in laser_filters
+Wrote header file in /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/include/laser_filters/RangeFilterConfig.h
+[ 24%] [34m[1mGenerating dynamic reconfigure files from cfg/ScanShadowsFilter.cfg: /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/include/laser_filters/ScanShadowsFilterConfig.h /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/lib/python3/dist-packages/laser_filters/cfg/ScanShadowsFilterConfig.py[0m
+Generating reconfiguration files for ScanShadowsFilter in laser_filters
+Wrote header file in /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/include/laser_filters/ScanShadowsFilterConfig.h
+[ 27%] [34m[1mGenerating dynamic reconfigure files from cfg/SpeckleFilter.cfg: /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/include/laser_filters/SpeckleFilterConfig.h /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/lib/python3/dist-packages/laser_filters/cfg/SpeckleFilterConfig.py[0m
+Generating reconfiguration files for SpeckleFilter in laser_filters
+Wrote header file in /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/include/laser_filters/SpeckleFilterConfig.h
+[ 31%] [34m[1mGenerating dynamic reconfigure files from cfg/SectorFilter.cfg: /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/include/laser_filters/SectorFilterConfig.h /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/lib/python3/dist-packages/laser_filters/cfg/SectorFilterConfig.py[0m
+Generating reconfiguration files for SectorFilter in laser_filters
+Wrote header file in /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/include/laser_filters/SectorFilterConfig.h
+[ 34%] [34m[1mGenerating dynamic reconfigure files from cfg/BoxFilter.cfg: /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/include/laser_filters/BoxFilterConfig.h /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/lib/python3/dist-packages/laser_filters/cfg/BoxFilterConfig.py[0m
+Generating reconfiguration files for BoxFilter in laser_filters
+Wrote header file in /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/include/laser_filters/BoxFilterConfig.h
+[ 34%] Built target laser_filters_gencfg
+[35m[1mScanning dependencies of target generic_laser_filter_node[0m
+[ 37%] [32mBuilding CXX object CMakeFiles/generic_laser_filter_node.dir/src/generic_laser_filter_node.cpp.o[0m
+[35m[1mScanning dependencies of target scan_to_scan_filter_chain[0m
+[ 41%] [32mBuilding CXX object CMakeFiles/scan_to_scan_filter_chain.dir/src/scan_to_scan_filter_chain.cpp.o[0m
+[ 44%] [32m[1mLinking CXX shared library /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/lib/liblaser_filters_nodelets.so[0m
+[ 44%] Built target laser_filters_nodelets
+[35m[1mScanning dependencies of target pointcloud_filters[0m
+[ 48%] [32mBuilding CXX object CMakeFiles/pointcloud_filters.dir/src/pointcloud_filters.cpp.o[0m
+[ 51%] [32m[1mLinking CXX executable /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/lib/laser_filters/scan_to_cloud_filter_chain[0m
+[ 51%] Built target scan_to_cloud_filter_chain
+[35m[1mScanning dependencies of target laser_scan_filters[0m
+[ 55%] [32mBuilding CXX object CMakeFiles/laser_scan_filters.dir/src/laser_scan_filters.cpp.o[0m
+[ 58%] [32m[1mLinking CXX shared library /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/lib/libpointcloud_filters.so[0m
+[ 58%] Built target pointcloud_filters
+[ 62%] [32mBuilding CXX object CMakeFiles/laser_scan_filters.dir/src/median_filter.cpp.o[0m
+[ 65%] [32m[1mLinking CXX executable /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/lib/laser_filters/generic_laser_filter_node[0m
+[ 65%] Built target generic_laser_filter_node
+[ 68%] [32mBuilding CXX object CMakeFiles/laser_scan_filters.dir/src/array_filter.cpp.o[0m
+[ 72%] [32m[1mLinking CXX executable /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/lib/laser_filters/scan_to_scan_filter_chain[0m
+[ 72%] Built target scan_to_scan_filter_chain
+[ 75%] [32mBuilding CXX object CMakeFiles/laser_scan_filters.dir/src/box_filter.cpp.o[0m
+[ 79%] [32mBuilding CXX object CMakeFiles/laser_scan_filters.dir/src/polygon_filter.cpp.o[0m
+[ 82%] [32mBuilding CXX object CMakeFiles/laser_scan_filters.dir/src/scan_shadow_detector.cpp.o[0m
+[ 86%] [32mBuilding CXX object CMakeFiles/laser_scan_filters.dir/src/scan_shadows_filter.cpp.o[0m
+[ 89%] [32mBuilding CXX object CMakeFiles/laser_scan_filters.dir/src/speckle_filter.cpp.o[0m
+[ 93%] [32mBuilding CXX object CMakeFiles/laser_scan_filters.dir/src/intensity_filter.cpp.o[0m
+[ 96%] [32mBuilding CXX object CMakeFiles/laser_scan_filters.dir/src/sector_filter.cpp.o[0m
+[100%] [32m[1mLinking CXX shared library /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/laser_filters/lib/liblaser_scan_filters.so[0m
+[100%] Built target laser_scan_filters

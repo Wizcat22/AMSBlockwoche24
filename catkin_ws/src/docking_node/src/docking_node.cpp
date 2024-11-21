@@ -9,6 +9,11 @@
 #include "std_msgs/Bool.h"
 #include <std_msgs/Float32.h>
 
+#include <actionlib/client/simple_action_client.h>
+#include <actionlib/client/terminal_state.h>
+#include <move_base_msgs/MoveBaseAction.h>
+
+
 // current distant and angle to barrel
 static float current_dist = 1000.f;
 static float current_angle;
@@ -20,13 +25,15 @@ int current_init_iter;
 
 
 #define NUM_INIT_LOOPS 15                   // Anzahl der Scan Nachrichten die abgewartet werden, um die approx Distanz zum Barrel zu ermitteln
-#define ROT_SPEED 0.3f                     // Rotationsgeschwindigkeit
+#define ROT_SPEED 0.2f                     // Rotationsgeschwindigkeit
 #define TRANSL_SPEED 0.12f                  // translatorische Geschwindigkeit
 #define DIST_TO_BARREL_M 0.17               // Zieldistanz zur Tonne
 #define CONTROL_RATE 100                    // sleep time twischen Controller-Loops
 #define DEG_TO_RAD(x) (x/180.0 * M_PI)      // grad zu radiant
 #define TOLERANCE_TO_BARREL 0.6             //
 #define ANGLE_TOLERANCE 2
+
+typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
 void move_to_barrel(ros::Publisher& pub){
     geometry_msgs::Twist msg;
@@ -169,8 +176,32 @@ int main(int argc, char **argv)
 
     // Await Force Feedback
 
+    ros::Rate take_a_break(2000);
+    take_a_break.sleep();
 
     // Send Home Goal To Move_Base Action Server
+
+    //tell the action client that we want to spin a thread by default
+    MoveBaseClient ac("move_base", true);
+    //wait for the action server to come up
+    while(!ac.waitForServer(ros::Duration(5.0))){
+      ROS_INFO("Waiting for the move_base action server to come up");
+    }
+    move_base_msgs::MoveBaseGoal goal;
+    //we'll send a goal to the robot to move 1 meter forward
+    goal.target_pose.header.frame_id = "map";
+    goal.target_pose.header.stamp = ros::Time::now();
+    goal.target_pose.pose.position.x = 0.0;
+    goal.target_pose.pose.position.y = 0.0;
+    goal.target_pose.pose.orientation.w = 1.0;
+    ROS_INFO("Sending goal");
+    ac.sendGoal(goal);
+    ac.waitForResult();
+    if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
+      ROS_INFO("Hooray, the base moved 1 meter forward");
+    else
+      ROS_INFO("The base failed to move forward 1 meter for some reason");
+
 
     return 0;
 }

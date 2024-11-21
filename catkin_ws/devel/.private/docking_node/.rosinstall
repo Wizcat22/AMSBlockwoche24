@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/docking_node/setup.sh

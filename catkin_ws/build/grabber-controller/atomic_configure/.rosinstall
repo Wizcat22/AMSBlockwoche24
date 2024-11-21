@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/grabber-controller/setup.sh

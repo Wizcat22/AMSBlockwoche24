@@ -40,10 +40,10 @@ TebLocalPlannerROS:
   footprint_model/rear_offset: 0.2 #(double, default: 0.2) This parameter is only relevant for type "two_circles". It describes how much the center of the rear circle is shifted along the robot's negative x-axis. The robot's axis of rotation is assumed to be located at [0,0].
   footprint_model/rear_radius: 0.2 #(double, default: 0.2) This parameter is only relevant for type "two_circles". It contains the radius of rear circle.
   footprint_model/vertices: [
-      [0.155, 0.105],
-      [-0.155, 0.105],
-      [-0.155, -0.105],
-      [0.155, -0.105]
+      [0.20, 0.105],
+      [-0.20, 0.105],
+      [-0.20, -0.105],
+      [0.20, -0.105]
     ] #(double[], default: [ [0.25,-0.05], [...], ...]) This parameter is only relevant for type "polygon". It contains the list of polygon vertices (2d coordinates each). The polygon is always closed: do not repeat the first vertex at the end.
   is_footprint_dynamic: false #(bool, default: false) If true, updates the footprint before checking trajectory feasibility
 

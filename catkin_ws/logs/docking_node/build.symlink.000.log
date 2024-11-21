@@ -1,0 +1,4 @@
+Symlinking /home/edurob/ams-bw-ws2425/catkin_ws/devel/lib/pkgconfig/docking_node.pc
+Symlinking /home/edurob/ams-bw-ws2425/catkin_ws/devel/lib/docking_node/docking_node
+Symlinking /home/edurob/ams-bw-ws2425/catkin_ws/devel/share/docking_node/cmake/docking_nodeConfig.cmake
+Symlinking /home/edurob/ams-bw-ws2425/catkin_ws/devel/share/docking_node/cmake/docking_nodeConfig-version.cmake

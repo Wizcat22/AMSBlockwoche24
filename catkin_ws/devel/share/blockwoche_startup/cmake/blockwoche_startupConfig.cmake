@@ -1,0 +1,1 @@
+/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/blockwoche_startup/share/blockwoche_startup/cmake/blockwoche_startupConfig.cmake
