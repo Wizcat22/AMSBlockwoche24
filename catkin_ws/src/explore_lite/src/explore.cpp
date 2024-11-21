@@ -297,7 +297,10 @@ void Explore::stop()
   ros::NodeHandle nh;
   ros::Publisher log_pub = nh.advertise<std_msgs::String>("/explore_lite_log", 10);
   std_msgs::String msg;
-  msg.data = "Exploration stopped.";
+
+  std::stringstream ss;
+  ss << "Exploration stopped." << count;
+  msg.data = ss.str();
   log_pub.publish(msg);
 }
 
