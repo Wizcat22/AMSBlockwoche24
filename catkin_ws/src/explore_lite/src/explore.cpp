@@ -290,7 +290,15 @@ void Explore::stop()
   move_base_client_.cancelAllGoals();
   exploring_timer_.stop();
   ROS_INFO("Exploration stopped.");
+
+  // Publisher initialisieren und Nachricht senden
+  ros::NodeHandle nh;
+  ros::Publisher log_pub = nh.advertise<std_msgs::String>("/explore_lite_log", 10);
+  std_msgs::String msg;
+  msg.data = "Exploration stopped.";
+  log_pub.publish(msg);
 }
+
 
 }  // namespace explore
 
