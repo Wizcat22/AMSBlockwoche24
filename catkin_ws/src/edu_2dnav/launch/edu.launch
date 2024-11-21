@@ -47,7 +47,7 @@
     <include file="$(find explore_lite)/launch/explore.launch">
 	</include>
 
-    <node pkg="tf" type="static_transform_publisher" name="laser-frame_broadcaster" args="0 0 0 0 0 0 0 base_link laser-frame 100" />
+    <node pkg="tf" type="static_transform_publisher" name="laser-frame_broadcaster" args="0 0 0 0 0 0 base_link laser-frame 100" />
 
     <!-- Save Map --> 
     <!--    <node pkg="roslaunch" type="roslaunch" name="saver_launcher" args="$(find explore)/launch/map_saver.launch"/> -->
