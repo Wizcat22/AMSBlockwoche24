@@ -299,7 +299,6 @@ void Explore::stop()
   std_msgs::String msg;
   msg.data = "Exploration stopped.";
   log_pub_.publish(msg);
-  ros::spinOnce();
 }
 
 }  // namespace explore
