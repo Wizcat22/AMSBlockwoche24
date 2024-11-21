@@ -1,12 +1,9 @@
 #!/usr/bin/env python
 
 import rospy
-from std_msgs.msg import String 
-from threading import Timer
+from std_msgs.msg import String
 import subprocess
 import os
-# Timeout in Sekunden 
-TIMEOUT = 10.0 
 
 def save_map():
     rospy.loginfo("Saving map!")
@@ -17,24 +14,15 @@ def save_map():
     except Exception as e:
         print(e)
 
-def message_callback(msg): 
-    global timer # Timer zurücksetzen 
-    timer.cancel() 
-    timer = Timer(TIMEOUT, save_map) 
-    timer.start()
+def log_message_callback(msg):
+    rospy.loginfo("Received log message: %s", msg.data)
+    save_map()
 
 if __name__=="__main__":
     rospy.init_node("map_saver")
     try:
-        rospy.Subscriber('/explore/frontier', String, message_callback)
-
-        # Initialer Timer-Start
-        timer = Timer(TIMEOUT, save_map)
-        timer.start()
-
+        rospy.Subscriber('/explore_lite_log', String, log_message_callback)
         rospy.spin()
-        # Timer stoppen, wenn der Node beendet wird
-        timer.cancel()
 
     except rospy.ROSInterruptException:
         rospy.loginfo("Interrupt received!")
