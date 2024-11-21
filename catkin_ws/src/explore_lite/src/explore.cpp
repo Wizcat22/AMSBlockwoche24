@@ -87,14 +87,14 @@ Explore::Explore()
   exploring_timer_ =
       relative_nh_.createTimer(ros::Duration(1. / planner_frequency_),
                                [this](const ros::TimerEvent&) { makePlan(); });
-  private: 
-    ros::NodeHandle n;
-    ros::Publisher log_pub_;
 }
 
 Explore::~Explore()
 {
   stop();
+  private:
+    ros::NodeHandle n;
+    ros::Publisher log_pub_;
 }
 
 void Explore::visualizeFrontiers(
