@@ -46,7 +46,7 @@ ObstacleTracker::ObstacleTracker(ros::NodeHandle& nh, ros::NodeHandle& nh_local)
   params_srv_ = nh_local_.advertiseService("params", &ObstacleTracker::updateParams, this);
 
   frontiers_sub_ = nh_.subscribe("frontiers", 10, &ObstacleTracker::messageCallback, this);
-  nav_goal_pub_ = nh_.advertise<geometry_msgs::PointStamped>("/test", 10);
+  nav_goal_pub_ = nh_.advertise<geometry_msgs::PointStamped>("/docking_node/goal_position", 10);
 
   // Timer, um regelmäßig zu prüfen, ob der Timeout überschritten wurde
   timeout_timer_ = nh_.createTimer(ros::Duration(1.0), &ObstacleTracker::checkTimeout, this);  // alle 1 Sekunde prüfen
@@ -279,11 +279,6 @@ void ObstacleTracker::publishNavigationGoalMessages() {
       point_stamped_msg.header.stamp = ros::Time::now();  // Setze den Zeitstempel auf die aktuelle Zeit
       point_stamped_msg.header.frame_id = "map";  // Setze den Frame auf "map" (oder anderen Koordinatenrahmen)
       point_stamped_msg.point = latest_obstacle->map_coordinates.point;  // Setze die Position des Hindernisses
-
-      ROS_WARN("Obstacle: %f", latest_obstacle->map_coordinates.point.x);
-
-      ROS_WARN("Message: %f", point_stamped_msg.point.x);
-
       // Veröffentliche die Nachricht
       nav_goal_pub_.publish(point_stamped_msg);
     }
