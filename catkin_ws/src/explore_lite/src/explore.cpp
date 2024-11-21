@@ -79,6 +79,8 @@ Explore::Explore()
     marker_array_publisher_ =
         private_nh_.advertise<visualization_msgs::MarkerArray>("frontiers", 10);
   }
+  ros::NodeHandle n;
+  ros::Publisher log_pub_ = n.advertise<std_msgs::String>("/explore_lite_log", 10);
 
   ROS_INFO("Waiting to connect to move_base server");
   move_base_client_.waitForServer();
@@ -293,9 +295,6 @@ void Explore::stop()
   exploring_timer_.stop();
   ROS_INFO("Exploration stopped.");
 
-  // Publisher initialisieren und Nachricht senden
-  ros::NodeHandle n;
-  ros::Publisher log_pub_ = n.advertise<std_msgs::String>("/explore_lite_log", 10);
   // Sende die Log-Nachricht an das Topic 
   std_msgs::String msg;
   msg.data = "Exploration stopped.";
