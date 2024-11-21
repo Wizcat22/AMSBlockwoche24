@@ -1,0 +1,8 @@
+prefix=/home/ams-notebook/ams-bw-ws2425/catkin_ws/install
+
+Name: explore
+Description: Description of explore
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
