@@ -36,6 +36,7 @@
  *********************************************************************/
 
 #include <explore/explore.h>
+#include <std_msgs/<String.h>
 
 #include <thread>
 
