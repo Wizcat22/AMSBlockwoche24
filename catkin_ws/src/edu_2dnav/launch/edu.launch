@@ -50,5 +50,5 @@
     <!-- <node pkg="tf" type="static_transform_publisher" name="laser-frame_broadcaster" args="0 0 0 0 0 0 base_link laser-frame 100" /> -->
 
     <!-- Save Map --> 
-    <node pkg="explore" type="save_post_shutdown.py" name="save_post_shutdown" output="screen"/>
+    <node pkg="explore" type="save_post_shutdown.py" name="save_post_shutdown.py" output="screen"/>
 </launch> 
