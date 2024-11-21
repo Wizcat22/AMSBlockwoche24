@@ -50,8 +50,7 @@ inline static bool operator==(const geometry_msgs::Point& one,
 
 namespace explore
 {
-  public:
-    ros::Publisher log_pub_;
+  ros::Publisher log_pub_;
 Explore::Explore()
   : private_nh_("~")
   , tf_listener_(ros::Duration(10.0))
