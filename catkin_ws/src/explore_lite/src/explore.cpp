@@ -79,7 +79,7 @@ Explore::Explore()
   }
 
   // Publisher initialisieren
-  log_pub_ = private_nh_.advertise<std_msgs::String>("/explore_lite_log", 10);
+  ros::Publisher log_pub_ = private_nh_.advertise<std_msgs::String>("/explore_lite_log", 10);
 
   ROS_INFO("Waiting to connect to move_base server");
   move_base_client_.waitForServer();
