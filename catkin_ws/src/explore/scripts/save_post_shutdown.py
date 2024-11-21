@@ -7,11 +7,15 @@ import os
 def shutdown_hook():
     rospy.loginfo("Saving map!")
     path = os.path.join(os.path.dirname(__file__), '../maps/map')
-    subprocess.run(['rosrun','map_server','map_saver','-f',path])
-    print(subprocess.list2cmdline(['rosrun','map_server','map_saver','-f',path]))
+    try:
+        subprocess.run(['rosrun','map_server','map_saver','-f',path])
+        print(subprocess.list2cmdline(['rosrun','map_server','map_saver','-f',path]))
+    except Exception as e:
+        print(e)
 
 
 if __name__=="__main__":
+    rospy.init_node("map_saver")
     rospy.on_shutdown(shutdown_hook)
     try:
         rospy.spin()
