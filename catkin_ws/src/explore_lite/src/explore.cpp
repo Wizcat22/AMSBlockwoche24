@@ -87,6 +87,9 @@ Explore::Explore()
   exploring_timer_ =
       relative_nh_.createTimer(ros::Duration(1. / planner_frequency_),
                                [this](const ros::TimerEvent&) { makePlan(); });
+  private: 
+    ros::NodeHandle n;
+    ros::Publisher log_pub_;
 }
 
 Explore::~Explore()
@@ -294,8 +297,8 @@ void Explore::stop()
   ROS_INFO("Exploration stopped.");
 
   // Publisher initialisieren und Nachricht senden
-  ros::NodeHandle nh;
-  ros::Publisher log_pub = nh.advertise<std_msgs::String>("/explore_lite_log", 10);
+  ros::NodeHandle n;
+  ros::Publisher log_pub_ = n.advertise<std_msgs::String>("/explore_lite_log", 10);
   // Sende die Log-Nachricht an das Topic 
   if (log_pub_) {
     std_msgs::String msg;
