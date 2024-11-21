@@ -1,0 +1,10 @@
+Symlinking /home/edurob/obstacle_detection4/catkin_ws/devel/lib/pkgconfig/edu_2dnav.pc
+Symlinking /home/edurob/obstacle_detection4/catkin_ws/devel/share/edu_2dnav/cmake/edu_2dnavConfig.cmake
+Symlinking /home/edurob/obstacle_detection4/catkin_ws/devel/share/edu_2dnav/cmake/edu_2dnavConfig-version.cmake
+Cleaning: (/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/edu_2dnav/cmake.lock, /home/edurob/ams-bw-ws2425/catkin_ws/devel/./cmake.lock)
+Cleaning: (/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/edu_2dnav/lib/pkgconfig/edu_2dnav.pc, /home/edurob/ams-bw-ws2425/catkin_ws/devel/lib/pkgconfig/edu_2dnav.pc)
+Cleaning: (/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/edu_2dnav/share/edu_2dnav/cmake/edu_2dnavConfig.cmake, /home/edurob/ams-bw-ws2425/catkin_ws/devel/share/edu_2dnav/cmake/edu_2dnavConfig.cmake)
+Cleaning: (/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/edu_2dnav/share/edu_2dnav/cmake/edu_2dnavConfig-version.cmake, /home/edurob/ams-bw-ws2425/catkin_ws/devel/share/edu_2dnav/cmake/edu_2dnavConfig-version.cmake)
+Unlinking: /home/edurob/ams-bw-ws2425/catkin_ws/devel/lib/pkgconfig/edu_2dnav.pc
+Unlinking: /home/edurob/ams-bw-ws2425/catkin_ws/devel/share/edu_2dnav/cmake/edu_2dnavConfig.cmake
+Unlinking: /home/edurob/ams-bw-ws2425/catkin_ws/devel/share/edu_2dnav/cmake/edu_2dnavConfig-version.cmake

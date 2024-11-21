@@ -1,0 +1,8 @@
+prefix=/home/edurob/obstacle_detection4/catkin_ws/install
+
+Name: edu_2dnav
+Description: Description of edu_2dnav
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
