@@ -37,7 +37,7 @@
 
 #include <explore/explore.h>
 #include <ros/ros.h>
-#include <std_msgs/<String.h>
+#include <std_msgs/String.h>
 
 #include <thread>
 
