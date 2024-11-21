@@ -86,15 +86,15 @@ TebLocalPlannerROS:
   costmap_converter_rate: 5.0 #(double, default: 5.0) Rate that defines how often the costmap_converter plugin processes the current costmap (the value should not be much higher than the costmap update rate) [in Hz].
 
   #Optimization Parameters
-  no_inner_iterations: 4 #(int, default: 5) Number of actual solver iterations called in each outerloop iteration. See param no_outer_iterations.
-  no_outer_iterations: 3 #(int, default: 4) Each outerloop iteration automatically resizes the trajectory according to the desired temporal resolution dt_ref and invokes the internal optimizer (that performs no_inner_iterations). The total number of solver iterations in each planning cycle is therefore the product of both values.
+  no_inner_iterations: 3 #(int, default: 5) Number of actual solver iterations called in each outerloop iteration. See param no_outer_iterations.
+  no_outer_iterations: 2 #(int, default: 4) Each outerloop iteration automatically resizes the trajectory according to the desired temporal resolution dt_ref and invokes the internal optimizer (that performs no_inner_iterations). The total number of solver iterations in each planning cycle is therefore the product of both values.
   penalty_epsilon: 0.1 #(double, default: 0.1) Add a small safety margin to penalty functions for hard-constraint approximations
   weight_max_vel_x: 2.0 #(double, default: 2.0) Optimization weight for satisfying the maximum allowed translational velocity
   weight_max_vel_theta: 1.0 #(double, default: 1.0) Optimization weight for satisfying the maximum allowed angular velocity
   weight_acc_lim_x: 1.0 #(double, default: 1.0) Optimization weight for satisfying the maximum allowed translational acceleration
   weight_acc_lim_y: 1.0
   weight_acc_lim_theta: 1.0 #(double, default: 1.0) Optimization weight for satisfying the maximum allowed angular acceleration
-  weight_kinematics_nh: 2.0 #(double, default: 1000.0) Optimization weight for satisfying the non-holonomic kinematics (this parameter must be high since the kinematics equation constitutes an equality constraint, even a value of 1000 does not imply a bad matrix condition due to small 'raw' cost values in comparison to other costs).
+  weight_kinematics_nh: 10.0 #(double, default: 1000.0) Optimization weight for satisfying the non-holonomic kinematics (this parameter must be high since the kinematics equation constitutes an equality constraint, even a value of 1000 does not imply a bad matrix condition due to small 'raw' cost values in comparison to other costs).
   weight_kinematics_forward_drive: 1.0 #(double, default: 1.0) Optimization weight for forcing the robot to choose only forward directions (positive transl. velocities). A small weight (e.g. 1.0) still allows driving backwards. A value around 1000 almost prevents backward driving (but cannot be guaranteed).
   weight_kinematics_turning_radius: 1.0 #(double, default: 1.0) Optimization weight for enforcing a minimum turning radius (only for carlike robots).
   weight_optimaltime: 1.0 #(double, default: 1.0) Optimization weight for contracting the trajectory w.r.t transition/execution time

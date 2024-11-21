@@ -32,7 +32,10 @@ int current_init_iter;
 #define DEG_TO_RAD(x) (x/180.0 * M_PI)      // grad zu radiant
 #define TOLERANCE_TO_BARREL 0.6             //
 #define ANGLE_TOLERANCE 2
+#define RESENDS 3
 
+#define GRIP_OPEN 350
+#define GRIP_CLOSE 270
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
 void move_to_barrel(ros::Publisher& pub){
@@ -63,6 +66,8 @@ void starter_callback(const std_msgs::Bool::ConstPtr& start_flag){
     ROS_INFO("Received Starting-Flag.");
     start_docking = start_flag->data;
 }
+
+void feedback_callback(const std_msgs::Float32::ConstPtr& feedback){}
 
 void raw_laser_callback(const sensor_msgs::LaserScan::ConstPtr& scan_in)
 {
@@ -108,7 +113,7 @@ int main(int argc, char **argv)
     ros::Subscriber sub_action = nh.subscribe("/docking_node/start", 5, starter_callback);
     ros::Publisher pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
     ros::Publisher pub_gripper = nh.advertise<std_msgs::Float32>("grabber/angle", 10);
-    ros::Subscriber sub_force_feedback = nh.subscribe("grabber/feedback", 5, starter_callback);
+    ros::Subscriber sub_force_feedback = nh.subscribe("grabber/feedback", 5, feedback_callback);
     
     ROS_INFO("Wating for Starter-Flag");
     ros::Rate loop_wait_flag(20);
@@ -117,6 +122,16 @@ int main(int argc, char **argv)
         ros::spinOnce();
     }
     ROS_INFO("Staring Docking_Node");
+    ros::Rate grab_rate(200);
+
+    std_msgs::Float32 open_msg;
+    open_msg.data = GRIP_OPEN;
+
+    for(int i = 0; i < 2; i++){
+        pub_gripper.publish(open_msg);
+        grab_rate.sleep();
+        ros::spinOnce();
+    }
 
     ros::Rate loop_rate(20);
     while(!got_first_scan){
@@ -165,10 +180,9 @@ int main(int argc, char **argv)
     
     // close Gripper
     std_msgs::Float32 grapper_msg;
-    grapper_msg.data = -800;
+    grapper_msg.data = GRIP_CLOSE;
 
-    ros::Rate grab_rate(200);
-    for(int i = 0; i < 2; i++){
+    for(int i = 0; i < RESENDS; i++){
         pub_gripper.publish(grapper_msg);
         grab_rate.sleep();
         ros::spinOnce();
@@ -176,8 +190,10 @@ int main(int argc, char **argv)
 
     // Await Force Feedback
 
-    ros::Rate take_a_break(2000);
-    take_a_break.sleep();
+    // ros::Rate take_a_break(5000);
+    // take_a_break.sleep();
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(4000));
 
     // Send Home Goal To Move_Base Action Server
 
@@ -197,11 +213,19 @@ int main(int argc, char **argv)
     ROS_INFO("Sending goal");
     ac.sendGoal(goal);
     ac.waitForResult();
-    if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
-      ROS_INFO("Hooray, the base moved 1 meter forward");
-    else
-      ROS_INFO("The base failed to move forward 1 meter for some reason");
+    
+    // if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
+    //   ROS_INFO("Hooray, the base moved 1 meter forward");
+    // else
+    //   ROS_INFO("The base failed to move forward 1 meter for some reason");
+    std_msgs::Float32 drop_msg;
+    drop_msg.data = GRIP_OPEN;
 
+    for(int i = 0; i < RESENDS; i++){
+        pub_gripper.publish(drop_msg);
+        grab_rate.sleep();
+        ros::spinOnce();
+    }
 
     return 0;
 }
