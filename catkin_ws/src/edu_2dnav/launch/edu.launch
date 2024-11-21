@@ -20,7 +20,7 @@
 	</group>
 	<group if="$(eval arg('mapping') == 'gmapping')">
 		<node name="slam2d_node" pkg="gmapping" type="slam_gmapping" output="screen">
-			<param name="scan" type="string" value="scan"/>
+			<remap from="scan" to="/laser/scan"/>
 		</node>
 	</group> -->
 
