@@ -50,6 +50,8 @@ inline static bool operator==(const geometry_msgs::Point& one,
 
 namespace explore
 {
+  public:
+    ros::Publisher log_pub_;
 Explore::Explore()
   : private_nh_("~")
   , tf_listener_(ros::Duration(10.0))
@@ -79,7 +81,7 @@ Explore::Explore()
   }
 
   // Publisher initialisieren
-  ros::Publisher log_pub_ = private_nh_.advertise<std_msgs::String>("/explore_lite_log", 10);
+  log_pub_ = private_nh_.advertise<std_msgs::String>("/explore_lite_log", 10);
 
   ROS_INFO("Waiting to connect to move_base server");
   move_base_client_.waitForServer();
@@ -300,7 +302,6 @@ void Explore::stop()
   log_pub_.publish(msg);
   ros::spinOnce();
 }
-
 
 }  // namespace explore
 
