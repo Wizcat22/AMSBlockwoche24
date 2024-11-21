@@ -92,9 +92,6 @@ Explore::Explore()
 Explore::~Explore()
 {
   stop();
-  private:
-    ros::NodeHandle n;
-    ros::Publisher log_pub_;
 }
 
 void Explore::visualizeFrontiers(
@@ -300,13 +297,10 @@ void Explore::stop()
   ros::NodeHandle n;
   ros::Publisher log_pub_ = n.advertise<std_msgs::String>("/explore_lite_log", 10);
   // Sende die Log-Nachricht an das Topic 
-  if (log_pub_) {
-    std_msgs::String msg;
-    msg.data = "Exploration stopped.";
-    log_pub_.publish(msg);
-    } else {
-      ROS_ERROR("Log publisher not initialized.");
-    }
+  std_msgs::String msg;
+  msg.data = "Exploration stopped.";
+  log_pub_.publish(msg);
+  ros::spinOnce();
 }
 
 
