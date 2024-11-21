@@ -2,6 +2,7 @@
 
 import rospy
 from std_msgs.msg import Float32, String
+import random
 
 class GrabberController:
     def __init__(self):
@@ -9,7 +10,7 @@ class GrabberController:
         rospy.init_node('motor_command_publisher', anonymous=True)
 
         # Create a publisher object for the grabber
-        pub = rospy.Publisher('grabber/angle', Float32, queue_size=10)
+        self.pub = rospy.Publisher('grabber/angle', Float32, queue_size=10)
 
         # Create a subscriber object for force feedback
         rospy.Subscriber('grabber/feedback', Float32, self.feedback_callback)
@@ -17,7 +18,7 @@ class GrabberController:
         # Create a subscriber object to listen for commands
         rospy.Subscriber('grabber/command', String, self.handle_command)
 
-        self.rate = rospy.Rate(10)  # 10 Hz
+        self.rate = rospy.Rate(10)
 
         # Working variables
         self.force_feedback = 0.0
@@ -30,9 +31,9 @@ class GrabberController:
 
     def compute_command(self):
         if self.command == "open":
-            return 350.0
+            return 800
         elif self.command == "close":
-            return 270.0
+            return -800
         else:
             return 0.0
 
@@ -43,12 +44,11 @@ class GrabberController:
         while not rospy.is_shutdown():
             # Generate a command based on feedback
             command = self.compute_command()
-            rospy.loginfo(f"Publishing command: {command}")
 
             if command != 0.0:
                 self.pub.publish(command)
+                rospy.loginfo(f"Publishing command: {command}")
 
-            # Sleep to maintain loop rate
             self.rate.sleep()
 
 if __name__ == '__main__':
