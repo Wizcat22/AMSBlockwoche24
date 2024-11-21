@@ -24,7 +24,7 @@
 		</node>
 	</group> -->
 
-    <node name="slam2d_node" pkg="gmapping" type="slam_gmapping" output="screen">
+    <node name="gmapping" pkg="gmapping" type="slam_gmapping" output="screen">
         <param name="scan" type="string" value="/laser/scan"/>
     </node>
 
