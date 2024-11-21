@@ -296,12 +296,14 @@ void Explore::stop()
   // Publisher initialisieren und Nachricht senden
   ros::NodeHandle nh;
   ros::Publisher log_pub = nh.advertise<std_msgs::String>("/explore_lite_log", 10);
-  std_msgs::String msg;
-
-  std::stringstream ss;
-  ss << "Exploration stopped.";
-  msg.data = ss.str();
-  log_pub.publish(msg);
+  // Sende die Log-Nachricht an das Topic 
+  if (log_pub_) {
+    std_msgs::String msg;
+    msg.data = "Exploration stopped.";
+    log_pub_.publish(msg);
+    } else {
+      ROS_ERROR("Log publisher not initialized.");
+    }
 }
 
 
