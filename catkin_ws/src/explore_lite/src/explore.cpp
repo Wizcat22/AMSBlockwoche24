@@ -34,11 +34,9 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *
  *********************************************************************/
-
 #include <explore/explore.h>
 #include <ros/ros.h>
 #include <std_msgs/String.h>
-
 #include <thread>
 
 inline static bool operator==(const geometry_msgs::Point& one,
@@ -79,8 +77,9 @@ Explore::Explore()
     marker_array_publisher_ =
         private_nh_.advertise<visualization_msgs::MarkerArray>("frontiers", 10);
   }
-  ros::NodeHandle n;
-  ros::Publisher log_pub_ = n.advertise<std_msgs::String>("/explore_lite_log", 10);
+
+  // Publisher initialisieren
+  log_pub_ = private_nh_.advertise<std_msgs::String>("/explore_lite_log", 10);
 
   ROS_INFO("Waiting to connect to move_base server");
   move_base_client_.waitForServer();
