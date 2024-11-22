@@ -45,14 +45,8 @@ ObstacleTracker::ObstacleTracker(ros::NodeHandle& nh, ros::NodeHandle& nh_local)
   timer_ = nh_.createTimer(ros::Duration(1.0), &ObstacleTracker::timerCallback, this, false, false);
   params_srv_ = nh_local_.advertiseService("params", &ObstacleTracker::updateParams, this);
 
-  frontiers_sub_ = nh_.subscribe("frontiers", 10, &ObstacleTracker::messageCallback, this);
+  frontiers_sub_ = nh_.subscribe("/explore_lite_logs", 10, &ObstacleTracker::publishNavigationGoalMessages, this);
   nav_goal_pub_ = nh_.advertise<geometry_msgs::PointStamped>("/docking_node/goal_position", 10);
-
-  // Timer, um regelmäßig zu prüfen, ob der Timeout überschritten wurde
-  timeout_timer_ = nh_.createTimer(ros::Duration(1.0), &ObstacleTracker::checkTimeout, this);  // alle 1 Sekunde prüfen
-
-  // Startzeit auf die aktuelle Zeit setzen
-  last_received_time_ = ros::Time::now();
 
   initialize();
 }
@@ -240,28 +234,14 @@ void ObstacleTracker::obstaclesCallback(const obstacle_detector::Obstacles::Cons
 
   tracked_obstacles_.insert(tracked_obstacles_.end(), new_tracked_obstacles.begin(), new_tracked_obstacles.end());
 
-  publishNavigationGoalMessages();
+  //publishNavigationGoalMessages();
 
   // Remove old untracked obstacles and save new ones
   untracked_obstacles_.clear();
   untracked_obstacles_.assign(new_untracked_obstacles.begin(), new_untracked_obstacles.end());
 }
 
-void ObstacleTracker::messageCallback(const std_msgs::String::ConstPtr& msg) {
-  last_received_time_ = ros::Time::now();
-}
-
-void ObstacleTracker::checkTimeout(const ros::TimerEvent& event) {
-    ros::Duration elapsed_time = ros::Time::now() - last_received_time_;
-
-
-    // Wenn mehr als 5 Sekunden vergangen sind, Timeout erreicht
-    if (elapsed_time.toSec() >= 10.0) {
-        publishNavigationGoalMessages();
-    }
-}
-
-void ObstacleTracker::publishNavigationGoalMessages() {
+void ObstacleTracker::publishNavigationGoalMessages(const std_msgs::String::ConstPtr& msg) {
   ros::Time latest_seen_time = ros::Time().fromSec(0.0); // kleinster mögliches Zeit
   TrackedObstacle* latest_obstacle = nullptr;  // Zeiger auf das Obstacle mit dem neuesten "seen_time"
 

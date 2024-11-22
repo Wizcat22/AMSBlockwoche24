@@ -133,7 +133,7 @@ public:
     map_coordinates.header.stamp = ros::Time::now();
     map_coordinates.point.x = obstacle_.center.x;
     map_coordinates.point.y = obstacle_.center.y;
-    // transformLocalToMap(local_coordinates, map_coordinates);
+    transformLocalToMap(local_coordinates, map_coordinates);
     // ROS_WARN("Objekt in Map transformed: x = %f, y = %f, z = %f", map_coordinates.point.x,map_coordinates.point.y, map_coordinates.point.z);
 
     obstacle_.velocity.x = kf_x_.q_est(1);

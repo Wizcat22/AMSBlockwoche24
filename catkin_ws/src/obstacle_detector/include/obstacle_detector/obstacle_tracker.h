@@ -67,10 +67,8 @@ private:
   void obstaclesCallback(const obstacle_detector::Obstacles::ConstPtr new_obstacles);
 
   void initialize() { std_srvs::Empty empt; updateParams(empt.request, empt.response); }
-  void messageCallback(const std_msgs::String::ConstPtr& msg);
-  void checkTimeout(const ros::TimerEvent& event);
 
-  void publishNavigationGoalMessages();
+  void publishNavigationGoalMessages(const std_msgs::String::ConstPtr& msg);
 
   double obstacleCostFunction(const CircleObstacle& new_obstacle, const CircleObstacle& old_obstacle);
   void calculateCostMatrix(const std::vector<CircleObstacle>& new_obstacles, arma::mat& cost_matrix);
@@ -89,9 +87,6 @@ private:
 
   void updateObstacles();
   void publishObstacles();
-
-  ros::Timer timeout_timer_;  // Timer, der alle 1 Sekunde prüft
-  ros::Time last_received_time_;  // Speichert den Zeitstempel der letzten erhaltenen Nachricht
 
   ros::NodeHandle nh_;
   ros::NodeHandle nh_local_;
