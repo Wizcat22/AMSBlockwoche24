@@ -14,9 +14,12 @@ constexpr uint16_t DXL_BAUD_RATE = 57600;
 
 
 extern ros::Subscriber<std_msgs::Float32> grabber_angle_sub;
+extern ros::Publisher feedback_pub;
 
 void initDynamixel();
 
 void grabberAngle_callback(const std_msgs::Float32 &msg);
+
+//void initGrabberTopics(ros::NodeHandle &nh);
 
 #endif // EDUROB_GRABBER_H

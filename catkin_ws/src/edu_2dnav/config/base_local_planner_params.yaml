@@ -3,11 +3,14 @@ TebLocalPlannerROS:
   holonomic_robot: true
 
   #Robot Configuration Parameters
-  acc_lim_x: 0.5 #(double, default: 0.5) Maximum translational acceleration of the robot in meters/sec^2
-  acc_lim_theta: 2.0 #(double, default: 0.5) Maximum angular acceleration of the robot in radians/sec^2
+  
+  #aus Edurob.ino übernehmen
+  acc_lim_x: 0.7 #(double, default: 0.5) Maximum translational acceleration of the robot in meters/sec^2
+  acc_lim_y: 0.7
+  acc_lim_theta: 1.5 #(double, default: 0.5) Maximum angular acceleration of the robot in radians/sec^2
   max_vel_x: 0.4 #(double, default: 0.4)Maximum translational velocity of the robot in meters/sec
   max_vel_x_backwards: 0.2 #(double, default: 0.2) Maximum absolute translational velocity of the robot while driving backwards in meters/sec. See optimization parameter weight_kinematics_forward_drive
-  max_vel_theta: 2.0 #(double, default: 0.3) Maximum angular velocity of the robot in radians/sec
+  max_vel_theta: 1.5 #(double, default: 0.3) Maximum angular velocity of the robot in radians/sec
   #acc_lim_x: 0.5
   #acc_lim_y: 0.5
   #acc_lim_theta: 1.2
@@ -24,8 +27,8 @@ TebLocalPlannerROS:
   cmd_angle_instead_rotvel: false #(bool, default: false) Substitute the rotational velocity in the commanded velocity message by the corresponding steering angle [-pi/2,pi/2]. Note, changing the semantics of yaw rate depending on the application is not preferable. Here, it just complies with the inputs required by the stage simulator. Datatypes in ackermann_msgs are more appropriate, but are not supported by move_base. The local planner is not intended to send commands by itself.
 
   #The following parameters are relevant only for holonomic robots: (Note, reduce weight_kinematics_nh significantly in order to adjust the tradeoff between compliant longitudinal motion and non-compliant lateral motion (strafing)).
-  max_vel_y: 0.5 #(double, default: 0.0) Maximum strafing velocity of the robot (should be zero for non-holonomic robots!)
-  acc_lim_y: 0.5 #(double, default: 0.5) Maximum strafing acceleration of the robot
+  max_vel_y: 0.4 #(double, default: 0.0) Maximum strafing velocity of the robot (should be zero for non-holonomic robots!)
+  acc_lim_y: 0.7 #(double, default: 0.5) Maximum strafing acceleration of the robot
 
   #The following parameters are relevant for the footprint model used for optimization (see Tutorial Obstacle Avoidance and Robot Footprint Model). New in version 0.3
   footprint_model/type: "polygon" #(string, default: "point") Specify the robot footprint model type used for optimization. Different types are "point", "circular", "line", "two_circles" and "polygon." The type of the model significantly influences the required computation time.
@@ -37,10 +40,10 @@ TebLocalPlannerROS:
   footprint_model/rear_offset: 0.2 #(double, default: 0.2) This parameter is only relevant for type "two_circles". It describes how much the center of the rear circle is shifted along the robot's negative x-axis. The robot's axis of rotation is assumed to be located at [0,0].
   footprint_model/rear_radius: 0.2 #(double, default: 0.2) This parameter is only relevant for type "two_circles". It contains the radius of rear circle.
   footprint_model/vertices: [
-      [0.12, 0.105],
-      [-0.12, 0.105],
-      [-0.12, -0.105],
-      [0.12, -0.105],
+      [0.20, 0.105],
+      [-0.20, 0.105],
+      [-0.20, -0.105],
+      [0.20, -0.105]
     ] #(double[], default: [ [0.25,-0.05], [...], ...]) This parameter is only relevant for type "polygon". It contains the list of polygon vertices (2d coordinates each). The polygon is always closed: do not repeat the first vertex at the end.
   is_footprint_dynamic: false #(bool, default: false) If true, updates the footprint before checking trajectory feasibility
 
@@ -66,11 +69,11 @@ TebLocalPlannerROS:
   shrink_horizon_min_duration: 10.0 #(double, default: 10.0) Specify minimum duration for the reduced horizon in case an infeasible trajectory is detected (refer to parameter shrink_horizon_backup in order to activate the reduced horizon mode).
 
   #Obstacle Parameters
-  min_obstacle_dist: 0.05 #(double, default: 0.5) Minimum desired separation from obstacles in meters
+  min_obstacle_dist: 0.06 #(double, default: 0.5) Minimum desired separation from obstacles in meters
   include_costmap_obstacles: true #(bool, default: true) Specify if obstacles of the local costmap should be taken into account. Each cell that is marked as obstacle is considered as a point-obstacle. Therefore do not choose a very small resolution of the costmap since it increases computation time. In future releases this circumstance is going to be addressed as well as providing an additional api for dynamic obstacles.
   costmap_obstacles_behind_robot_dist: 1.0 #(double, default: 1.0) Limit the occupied local costmap obstacles taken into account for planning behind the robot (specify distance in meters).
   obstacle_poses_affected: 30 #(int, default: 30) Each obstacle position is attached to the closest pose on the trajectory in order to keep a distance. Additional neighbors can be taken into account as well. Note, this parameter might be removed in future versions, since the the obstacle association strategy has been modified in kinetic+. Refer to the parameter description of legacy_obstacle_association.
-  inflation_dist: 0.05 #(double, default: 0.6) Buffer zone around obstacles with non-zero penalty costs (should be larger than min_obstacle_dist in order to take effect). Also refer to the weight weight_inflation.
+  inflation_dist: 0.06 #(double, default: 0.6) Buffer zone around obstacles with non-zero penalty costs (should be larger than min_obstacle_dist in order to take effect). Also refer to the weight weight_inflation.
 
   include_dynamic_obstacles: true #(bool, default: false) If this parameter is set to true, the motion of obstacles with non-zero velocity (provided via user-supplied obstacles on topic ~/obstacles or obtained from the costmap_converter) is predicted and considered during optimization via a constant velocity model. New
   legacy_obstacle_association: false #(bool, default: false) The strategy of connecting trajectory poses with obstacles for optimization has been modified (see changelog). You can switch to the old/previous strategy by setting this parameter to true. Old strategy: for each obstacle, find the nearest TEB pose; new strategy: for each teb pose, find only "relevant" obstacles.
@@ -83,21 +86,21 @@ TebLocalPlannerROS:
   costmap_converter_rate: 5.0 #(double, default: 5.0) Rate that defines how often the costmap_converter plugin processes the current costmap (the value should not be much higher than the costmap update rate) [in Hz].
 
   #Optimization Parameters
-  no_inner_iterations: 5 #(int, default: 5) Number of actual solver iterations called in each outerloop iteration. See param no_outer_iterations.
-  no_outer_iterations: 4 #(int, default: 4) Each outerloop iteration automatically resizes the trajectory according to the desired temporal resolution dt_ref and invokes the internal optimizer (that performs no_inner_iterations). The total number of solver iterations in each planning cycle is therefore the product of both values.
+  no_inner_iterations: 3 #(int, default: 5) Number of actual solver iterations called in each outerloop iteration. See param no_outer_iterations.
+  no_outer_iterations: 2 #(int, default: 4) Each outerloop iteration automatically resizes the trajectory according to the desired temporal resolution dt_ref and invokes the internal optimizer (that performs no_inner_iterations). The total number of solver iterations in each planning cycle is therefore the product of both values.
   penalty_epsilon: 0.1 #(double, default: 0.1) Add a small safety margin to penalty functions for hard-constraint approximations
   weight_max_vel_x: 2.0 #(double, default: 2.0) Optimization weight for satisfying the maximum allowed translational velocity
   weight_max_vel_theta: 1.0 #(double, default: 1.0) Optimization weight for satisfying the maximum allowed angular velocity
   weight_acc_lim_x: 1.0 #(double, default: 1.0) Optimization weight for satisfying the maximum allowed translational acceleration
-  weight_acc_lim_y: 0.0
+  weight_acc_lim_y: 1.0
   weight_acc_lim_theta: 1.0 #(double, default: 1.0) Optimization weight for satisfying the maximum allowed angular acceleration
-  weight_kinematics_nh: 1.0 #(double, default: 1000.0) Optimization weight for satisfying the non-holonomic kinematics (this parameter must be high since the kinematics equation constitutes an equality constraint, even a value of 1000 does not imply a bad matrix condition due to small 'raw' cost values in comparison to other costs).
-  weight_kinematics_forward_drive: 30.0 #(double, default: 1.0) Optimization weight for forcing the robot to choose only forward directions (positive transl. velocities). A small weight (e.g. 1.0) still allows driving backwards. A value around 1000 almost prevents backward driving (but cannot be guaranteed).
+  weight_kinematics_nh: 10.0 #(double, default: 1000.0) Optimization weight for satisfying the non-holonomic kinematics (this parameter must be high since the kinematics equation constitutes an equality constraint, even a value of 1000 does not imply a bad matrix condition due to small 'raw' cost values in comparison to other costs).
+  weight_kinematics_forward_drive: 1.0 #(double, default: 1.0) Optimization weight for forcing the robot to choose only forward directions (positive transl. velocities). A small weight (e.g. 1.0) still allows driving backwards. A value around 1000 almost prevents backward driving (but cannot be guaranteed).
   weight_kinematics_turning_radius: 1.0 #(double, default: 1.0) Optimization weight for enforcing a minimum turning radius (only for carlike robots).
   weight_optimaltime: 1.0 #(double, default: 1.0) Optimization weight for contracting the trajectory w.r.t transition/execution time
-  weight_obstacle: 40.0 #(double, default: 50.0) Optimization weight for keeping a minimum distance from obstacles
-  weight_viapoint: 50.0 #(double, default: 1.0) Optimization weight for minimzing the distance to via-points (resp. reference path). New in version 0.4
-  weight_inflation: 0.05 #(double, default: 0.1) Optimization weight for the inflation penalty (should be small).
+  weight_obstacle: 60.0 #(double, default: 50.0) Optimization weight for keeping a minimum distance from obstacles
+  weight_viapoint: 1.0 #(double, default: 1.0) Optimization weight for minimzing the distance to via-points (resp. reference path). New in version 0.4
+  weight_inflation: 0.1 #(double, default: 0.1) Optimization weight for the inflation penalty (should be small).
   weight_adapt_factor: 2.0 #(double, default: 2.0) Some special weights (currently weight_obstacle) are repeatedly scaled by this factor in each outer TEB iteration (weight_new = weight_old*factor). Increasing weights iteratively instead of setting a huge value a-priori leads to better numerical conditions of the underlying optimization problem.
 
   #Parallel Planning in distinctive Topologies
@@ -120,3 +123,6 @@ TebLocalPlannerROS:
   #Miscellaneous Parameters
   odom_topic: "odom" #(string, default: "odom") Topic name of the odometry message, provided by the robot driver or simulator.
   map_frame: "map" #(string, default: "odom") Global planning frame (in case of a static map, this parameter must be usually changed to "/map".
+
+  #NEUER PARAMETER
+  sim_granularity: 0.05

@@ -1,11 +1,11 @@
 local_costmap:
-  update_frequency: 5.0
+  update_frequency: 15.0
   publish_frequency: 5.0
   always_send_full_costmap: true
   static_map: false
   rolling_window: true
-  width: 14.0
-  height: 14.0
+  width: 10.0
+  height: 10.0
   resolution: 0.1
 
   obstacle_layer:
@@ -23,7 +23,7 @@ local_costmap:
     raytrace_range: 11
 
   inflater_layer:
-    inflation_radius: 0.04
+    inflation_radius: 0.08
     cost_scaling_factor: 0.2
 
   plugins:

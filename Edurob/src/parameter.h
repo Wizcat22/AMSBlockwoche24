@@ -19,7 +19,7 @@ static const double l2 = 0.0825;             // Distance between wheels aka "wid
 
 #ifdef MECANUM
 //############################## 4 Mecanum Wheels ##############################
-static const double wheelRadius = 0.024;     // Wheelradius in meters (Mecanum/4-Omni)
+static const double wheelRadius = (109.0/150.0)*0.024;     // Wheelradius in meters (Mecanum/4-Omni)
 static const double l1 = 0.1;                // Distance between axels aka "length"
 static const double l2 = 0.0865;             // Distance between wheels aka "width"
 //###########################################################################

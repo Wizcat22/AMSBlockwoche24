@@ -24,5 +24,6 @@
         <param name="base_global_planner" value="global_planner/GlobalPlanner"/> <!-- Set the global planner node to use for global pathplanning -->
         <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" /> <!-- Set the local planner to use for local pathplanning and navigation-->
         <param name="controller_frequency" value="50" /> <!-- Set frequency of the control loop (higher = better = more performance needed) -->
+        <!-- <param name="track_unknown_space" value="true"/> -->
     </node>
 </launch> 
