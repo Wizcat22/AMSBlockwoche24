@@ -12,7 +12,12 @@
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <move_base_msgs/MoveBaseAction.h>
+#include <geometry_msgs/PoseStamped.h>
 
+#include <tf2_ros/transform_listener.h>
+#include <geometry_msgs/PointStamped.h>
+#include <geometry_msgs/TransformStamped.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
 // current distant and angle to barrel
 static float current_dist = 1000.f;
@@ -36,6 +41,7 @@ int current_init_iter;
 
 #define GRIP_OPEN 350
 #define GRIP_CLOSE 270
+
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
 void move_to_barrel(ros::Publisher& pub){
@@ -65,6 +71,10 @@ void correct_attitude(ros::Publisher& pub){
 void starter_callback(const std_msgs::Bool::ConstPtr& start_flag){
     ROS_INFO("Received Starting-Flag.");
     start_docking = start_flag->data;
+}
+
+void barrel_pose_callback(const geometry_msgs::PoseStamped::ConstPtr& barrel_pose){
+
 }
 
 void feedback_callback(const std_msgs::Float32::ConstPtr& feedback){}
@@ -114,11 +124,15 @@ int main(int argc, char **argv)
     ros::Publisher pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
     ros::Publisher pub_gripper = nh.advertise<std_msgs::Float32>("grabber/angle", 10);
     ros::Subscriber sub_force_feedback = nh.subscribe("grabber/feedback", 5, feedback_callback);
-    
+    ros::Subscriber sub_near_barrel = nh.subscribe("/docking_node/", 1000, barrel_pose_callback);
+
+
+
+
     ROS_INFO("Wating for Starter-Flag");
     ros::Rate loop_wait_flag(20);
     while(!start_docking){
-        loop_wait_flag.sleep();
+        loop_wait_flag.sleep()
         ros::spinOnce();
     }
     ROS_INFO("Staring Docking_Node");
