@@ -27,7 +27,7 @@ static bool got_first_scan = false;
 static bool start_docking = false;
 static float approx_start_dist_barrel = 1000.f;     // wird benötigt, um Scans die nicht das Barrel enthalten zu ignorieren
 int current_init_iter;
-
+tf::Vector3 barrel_goal;
 
 #define NUM_INIT_LOOPS 15                   // Anzahl der Scan Nachrichten die abgewartet werden, um die approx Distanz zum Barrel zu ermitteln
 #define ROT_SPEED 0.2f                     // Rotationsgeschwindigkeit
@@ -73,8 +73,74 @@ void starter_callback(const std_msgs::Bool::ConstPtr& start_flag){
     start_docking = start_flag->data;
 }
 
-void barrel_pose_callback(const geometry_msgs::PoseStamped::ConstPtr& barrel_pose){
+geometry_msgs::Point findPointBeforeGoal(const nav_msgs::Path& path, double distance_before_goal) {
+    double accumulated_distance = 0.0;
+    double target_distance = 0.0;
 
+    // Berechnung der Gesamtlänge des Pfades
+    for (size_t i = 1; i < path.poses.size(); ++i) {
+        const auto& p1 = path.poses[i - 1].pose.position;
+        const auto& p2 = path.poses[i].pose.position;
+        double segment_distance = std::hypot(p2.x - p1.x, p2.y - p1.y);
+        accumulated_distance += segment_distance;
+    }
+
+    // Zielposition entlang des Pfades bestimmen
+    target_distance = accumulated_distance - distance_before_goal;
+    if (target_distance <= 0.0) {
+        ROS_WARN("Der Pfad ist kürzer als die angegebene Distanz vor dem Ziel.");
+        return path.poses.front().pose.position;
+    }
+
+    // Finden des Punktes 30 cm vor dem Ziel
+    accumulated_distance = 0.0;
+    for (size_t i = 1; i < path.poses.size(); ++i) {
+        const auto& p1 = path.poses[i - 1].pose.position;
+        const auto& p2 = path.poses[i].pose.position;
+        double segment_distance = std::hypot(p2.x - p1.x, p2.y - p1.y);
+        accumulated_distance += segment_distance;
+
+        if (accumulated_distance >= target_distance) {
+            return p1; // Rückgabe des Punktes vor Überschreiten der Zielposition
+        }
+    }
+
+    // Falls kein Punkt gefunden wurde, Rückgabe des letzten Punktes
+    return path.poses.back().pose.position;
+}
+
+void barrel_pose_callback(const geometry_msgs::PoseStamped::ConstPtr& barrel_pose){
+    static tf::TransformListener tf_listener;
+    tf::StampedTransform transform;
+    tf_listener.lookupTransform("map", "base_link", ros::Time(0), transform);
+    tf::Vector3 robot_coord = transform.getOrigin();
+    tf::Vector3 barrel_vec = Vector3(barrel_pose.pose.position.x, barrel_pose.pose.position.y, barrel_pose.pose.position.z);
+    tf::Vector3 dir_barrel_to_robot = robot_coord - barrel_vec;
+    dir_barrel_to_robot.normalize();
+    barrel_vec = barrel_vec + 0.3 * dir_barrel_to_robot;
+
+    barrel_goal = barrel_vec;
+
+    MoveBaseClient ac("move_base", true);
+    //wait for the action server to come up
+    while(!ac.waitForServer(ros::Duration(5.0))){
+      ROS_INFO("Waiting for the move_base action server to come up");
+    }
+
+    move_base_msgs::MoveBaseGoal goal;
+    //we'll send a goal to the robot to move 1 meter forward
+    goal.target_pose.header.frame_id = "map";
+    goal.target_pose.header.stamp = ros::Time::now();
+    goal.target_pose.pose.position.x = barrel_vec.x;
+    goal.target_pose.pose.position.y = barrel_vec.y;
+    goal.target_pose.pose.orientation.w = 1.0;
+    ROS_INFO("Sending goal");
+    ac.sendGoal(goal);
+    ac.waitForResult();
+
+    std::thread::this_thread::sleep_for(std::chrono::milliseconds(2000));
+
+    start_docking = true;
 }
 
 void feedback_callback(const std_msgs::Float32::ConstPtr& feedback){}
@@ -124,9 +190,7 @@ int main(int argc, char **argv)
     ros::Publisher pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
     ros::Publisher pub_gripper = nh.advertise<std_msgs::Float32>("grabber/angle", 10);
     ros::Subscriber sub_force_feedback = nh.subscribe("grabber/feedback", 5, feedback_callback);
-    ros::Subscriber sub_near_barrel = nh.subscribe("/docking_node/", 1000, barrel_pose_callback);
-
-
+    ros::Subscriber sub_near_barrel = nh.subscribe("/docking_node/goal_position", 1000, barrel_pose_callback);
 
 
     ROS_INFO("Wating for Starter-Flag");
