@@ -1,0 +1,28 @@
+<launch>
+    <include file="$(find rplidar_ros)/launch/rplidar_a1.launch"/>
+    <include file="$(find edu_2dnav)/launch/edu.launch"/>
+
+    <node name="rosserial_server" pkg="rosserial_server" type="serial_node" output="screen"/>
+    <!-- Save Map -->
+    <!-- <node name="map_server" pkg="map_server" type="map_saver" args="-f ~/catkin_ws/src/explore/maps/map" output="screen"/> -->
+    <!-- <node name="iris_lama_ros" pkg="iris_lama_ros" type="slam2d_ros"/> -->
+    <node name="slam_gmapping" pkg="gmapping" type="slam_gmapping">
+        <param name="xmin" type="double" value="-10.0"/>
+        <param name="xmax" type="double" value="10.0"/>
+        <param name="ymin" type="double" value="-10.0"/>
+        <param name="ymax" type="double" value="10.0"/>
+        <!-- <remap from="scan" to="/laser/scan"/> -->
+    </node>  
+    <node name="docking_node" pkg="docking_node" type="docking_node"/>
+    <rosparam command="load" file="$(find laser_filters)/examples/angle_filter_example.yaml" />
+    <include file="$(find laser_filters)/examples/angle_filter_example.launch"/>
+
+    <!-- Explore Lite -->
+    <include file="$(find explore_lite)/launch/explore.launch"/>
+
+    <!-- Save Map --> 
+    <node pkg="explore" type="save_post_shutdown.py" name="save_post_shutdown" output="screen"/>
+
+    <!-- Navigation Goal towards can -->
+    <node name="nav_goal" pkg="nav_goal" type="nav_goal.py" output="screen"/> 
+</launch>

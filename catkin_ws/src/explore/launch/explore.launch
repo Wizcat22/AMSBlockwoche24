@@ -1,0 +1,7 @@
+<launch>
+    <!-- Explore Lite -->
+    <include file="$(find explore_lite)/launch/explore.launch"/>
+
+    <!-- Save Map --> 
+    <node pkg="explore" type="save_post_shutdown.py" name="save_post_shutdown" output="screen"/>
+</launch>

@@ -1,0 +1,12 @@
+{
+    "cmake.ignoreCMakeListsMissing": true,
+    "files.associations": {
+        "functional": "cpp",
+        "streambuf": "cpp"
+    },
+    "ros.distro": "noetic",
+    "cSpell.words": [
+        "Dynamixel"
+    ],
+    "git.openRepositoryInParentFolders": "always"
+}
