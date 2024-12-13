@@ -1,6 +1,0 @@
-explore_lite
-/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/explore_lite/cmake.lock /home/edurob/ams-bw-ws2425/catkin_ws/devel/./cmake.lock
-/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/explore_lite/lib/pkgconfig/explore_lite.pc /home/edurob/ams-bw-ws2425/catkin_ws/devel/lib/pkgconfig/explore_lite.pc
-/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/explore_lite/lib/explore_lite/explore /home/edurob/ams-bw-ws2425/catkin_ws/devel/lib/explore_lite/explore
-/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/explore_lite/share/explore_lite/cmake/explore_liteConfig.cmake /home/edurob/ams-bw-ws2425/catkin_ws/devel/share/explore_lite/cmake/explore_liteConfig.cmake
-/home/edurob/ams-bw-ws2425/catkin_ws/devel/.private/explore_lite/share/explore_lite/cmake/explore_liteConfig-version.cmake /home/edurob/ams-bw-ws2425/catkin_ws/devel/share/explore_lite/cmake/explore_liteConfig-version.cmake
