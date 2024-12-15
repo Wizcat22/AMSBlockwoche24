@@ -8,43 +8,42 @@
 #include <ros/console.h>
 #include "std_msgs/Bool.h"
 #include <std_msgs/Float32.h>
-
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <move_base_msgs/MoveBaseAction.h>
 #include <geometry_msgs/PoseStamped.h>
-
-//#include <tf2_ros/transform_listener.h>
 #include <geometry_msgs/PointStamped.h>
 #include <geometry_msgs/TransformStamped.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf/transform_listener.h>
 
-// current distant and angle to barrel
-static float current_dist = 1000.f;
+static float current_dist = 1000.f;                 // current distant and angle to barrel
 static float current_angle;
 
-static bool got_first_scan = false;
-static bool start_docking = false;
-static float approx_start_dist_barrel = 1000.f;     // wird benötigt, um Scans die nicht das Barrel enthalten zu ignorieren
-int current_init_iter;
-//tf2::Vector3 barrel_goal;
+static bool got_first_scan = false;                 // Verhindert das Starten des Andockens, wenn noch keine Scans eingetroffen sind
+static bool start_docking = false;                  // Flag, welches das Andocken einleitet
+static float approx_start_dist_barrel = 1000.f;     // wird benötigt, um Scans die nicht das Barrel enthalten, zu ignorieren
+int current_init_iter;                              // Zähler für die initiale Schätzung des Abstandes zum Ziel
 
-#define NUM_INIT_LOOPS 15                   // Anzahl der Scan Nachrichten die abgewartet werden, um die approx Distanz zum Barrel zu ermitteln
-#define ROT_SPEED 0.2f                     // Rotationsgeschwindigkeit
-#define TRANSL_SPEED 0.09f                  // translatorische Geschwindigkeit
-#define DIST_TO_BARREL_M 0.17               // Zieldistanz zur Tonne
-#define CONTROL_RATE 100                    // sleep time twischen Controller-Loops
-#define DEG_TO_RAD(x) (x/180.0 * M_PI)      // grad zu radiant
-#define TOLERANCE_TO_BARREL 0.6             //
-#define ANGLE_TOLERANCE 2
-#define RESENDS 3
+#define NUM_INIT_LOOPS 15                           // Anzahl der Scan Nachrichten die abgewartet werden, um die approx. Distanz zum Barrel zu ermitteln
+#define ROT_SPEED 0.2f                              // Rotationsgeschwindigkeit beim Drehen zum Ziel
+#define TRANSL_SPEED 0.09f                          // translatorische Geschwindigkeit zum Ziel
+#define DIST_TO_BARREL_M 0.17                       // Zieldistanz zum Barrel
+#define CONTROL_RATE 100                            // sleep time twischen Controller-Loops
+#define DEG_TO_RAD(x) (x/180.0 * M_PI)              // Umwandlung von Grad zu Radiant
+#define TOLERANCE_TO_BARREL 0.6                     // Toleranzwert, um Scans die das Zielobjekt nicht enthalten, zu filtern
+#define ANGLE_TOLERANCE 2                           // Winkeltoleranz beim Ausrichten zum Zielobjekt
+#define RESENDS 3                                   // gibt an, wie oft eine Nachricht geschickt werden soll, einmaliges Senden hat oftmals nicht ausgereicht
 
-#define GRIP_OPEN 350
-#define GRIP_CLOSE 270
+#define GRIP_OPEN 350                               // Greifer in offener Position
+#define GRIP_CLOSE 270                              // Greifer in geschlossener Position, niedriger als 240 kann Brownout zur Folge haben -> besser Forcefeedback (ToDo)
 
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
+/**
+ * @brief Setzt die translatorische Geschwindigkeit mittels Twist-Messages für die Dauer von CONTROL_RATE.
+ * @param pub Publisher für ROS-Nachrichten.
+ */
 void move_to_barrel(ros::Publisher& pub){
     geometry_msgs::Twist msg;
     ros::Rate ctrl_rate(CONTROL_RATE);
@@ -54,6 +53,10 @@ void move_to_barrel(ros::Publisher& pub){
     ros::spinOnce();
 }
 
+/**
+ * @brief Setzt die Drehgeschwindigkeit mittels Twist-Messages für die Dauer von CONTROL_RATE.
+ * @param pub Publisher für ROS-Nachrichten.
+ */
 void correct_attitude(ros::Publisher& pub){
     geometry_msgs::Twist msg;
     ros::Rate ctrl_rate(CONTROL_RATE);
@@ -69,11 +72,25 @@ void correct_attitude(ros::Publisher& pub){
     ros::spinOnce();
 }
 
+/**
+ * @brief Starter-Callback, dass die Andock-Prozedur begonnen werden kann.
+ * @param start_flag 'true' leitet das Andocken ein.
+ */
 void starter_callback(const std_msgs::Bool::ConstPtr& start_flag){
     ROS_INFO("Received Starting-Flag.");
     start_docking = start_flag->data;
 }
 
+/**
+ * @brief Callback, welches die geschätze Pose des Zielobjekts vom Detection-Node entgegennimmt
+ * und anschließend einen Zielpunkt in 30cm Entfernung des Barrels berechnet. Die Entfernung
+ * von 30cm liegen in Richtung des Startpunktes des EduRobs.
+ * 
+ * @param barrel_pose Geschätze Zielpose des Barrel vom Detection-Node.
+ * 
+ * \todo unvollständige Implementierung. Besser wäre den Pfad vom 'make_plan'-Service anzufragen
+ * und 30cm vorher zu Stoppen.
+ */
 void barrel_pose_callback(const geometry_msgs::PoseStamped::ConstPtr& barrel_pose){
     static tf::TransformListener tf2_listener;
     tf::StampedTransform transform;
@@ -105,8 +122,20 @@ void barrel_pose_callback(const geometry_msgs::PoseStamped::ConstPtr& barrel_pos
     start_docking = true;
 }
 
+/**
+ * \todo Beim Greifen Forcefeedback beachten, um zu hohen Strom im Gripper zu verhindern.
+ */
 void feedback_callback(const std_msgs::Float32::ConstPtr& feedback){}
 
+
+/**
+ * @brief Callback für ungefilterte LaserScans. Berechnet zunächst eine geschätzte Entfernung zum
+ * Zielobjekt und bewertet anschließend jede weitere Nachricht anhand dessen, ob Sie das Zielobjekt
+ * beinhaltet oder nicht. Danach wird für relevante Nachrichten das Minimum aus den gemessenen Abständen
+ * ermittelt und dieses in 'current_dist' gespeichert. 
+ * 
+ * @param scan_in ungefilterter LaserScan vom RP_Lidar Node.
+ */
 void raw_laser_callback(const sensor_msgs::LaserScan::ConstPtr& scan_in)
 {
     if(current_init_iter < NUM_INIT_LOOPS){
@@ -179,12 +208,11 @@ int main(int argc, char **argv)
     }
     ROS_INFO("Starting to rotate..");
     ros::Rate ctrl_rate(CONTROL_RATE);
-    while(std::fabs(current_dist) > DIST_TO_BARREL_M || std::fabs(std::fabs(current_angle) - M_PI) > DEG_TO_RAD(ANGLE_TOLERANCE)){
+    while((std::fabs(current_dist) > DIST_TO_BARREL_M || std::fabs(std::fabs(current_angle) - M_PI) > DEG_TO_RAD(ANGLE_TOLERANCE)) && ros::ok()){
         while(std::fabs(std::fabs(current_angle) - M_PI) > DEG_TO_RAD(ANGLE_TOLERANCE) && ros::ok()){
             correct_attitude(pub);
         }
         ROS_INFO("Startint to move towards barrel");
-        // std::fabs(current_dist) > DIST_TO_BARREL_M && std::fabs(std::fabs(current_angle) - M_PI) > DEG_TO_RAD(ANGLE_TOLERANCE) &&ros::ok()
         while(std::fabs(current_dist) > DIST_TO_BARREL_M && ros::ok()){
             move_to_barrel(pub);
             if(std::fabs(std::fabs(current_angle) - M_PI) > DEG_TO_RAD(ANGLE_TOLERANCE)){
@@ -209,13 +237,6 @@ int main(int argc, char **argv)
     ros::Publisher pub_complete = nh.advertise<std_msgs::Bool>("/docking_node/docking_complete", 5);
     std_msgs::Bool value;
     value.data = true;
-
-    // Publish Gripper Message
-    // for(int i = 0; i < 5; i++){
-    //     pub_complete.pub(value);
-    //     stop_rate.sleep();
-    //     ros::spinOnce();
-    // }
     
     // close Gripper
     std_msgs::Float32 grapper_msg;
@@ -227,23 +248,16 @@ int main(int argc, char **argv)
         ros::spinOnce();
     }
 
-    // Await Force Feedback
-
-    // ros::Rate take_a_break(5000);
-    // take_a_break.sleep();
-
     std::this_thread::sleep_for(std::chrono::milliseconds(4000));
 
-    // Send Home Goal To Move_Base Action Server
-
-    //tell the action client that we want to spin a thread by default
+    // Zurück zum Ursprung der Map fahren
     MoveBaseClient ac("move_base", true);
-    //wait for the action server to come up
+
     while(!ac.waitForServer(ros::Duration(5.0))){
       ROS_INFO("Waiting for the move_base action server to come up");
     }
+
     move_base_msgs::MoveBaseGoal goal;
-    //we'll send a goal to the robot to move 1 meter forward
     goal.target_pose.header.frame_id = "map";
     goal.target_pose.header.stamp = ros::Time::now();
     goal.target_pose.pose.position.x = 0.0;
@@ -253,10 +267,7 @@ int main(int argc, char **argv)
     ac.sendGoal(goal);
     ac.waitForResult();
     
-    // if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
-    //   ROS_INFO("Hooray, the base moved 1 meter forward");
-    // else
-    //   ROS_INFO("The base failed to move forward 1 meter for some reason");
+    // Barrel loslassen
     std_msgs::Float32 drop_msg;
     drop_msg.data = GRIP_OPEN;
 
