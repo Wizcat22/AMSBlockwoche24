@@ -23,6 +23,6 @@
     <!-- Save Map --> 
     <node pkg="explore" type="save_post_shutdown.py" name="save_post_shutdown" output="screen"/>
 
-    <!-- Navigation Goal towards can -->
-    <node name="nav_goal" pkg="nav_goal" type="nav_goal.py" output="screen"/> 
+    <!-- Navigation Goal towards can: Not implemented -->
+    <!-- <node name="nav_goal" pkg="nav_goal" type="nav_goal.py" output="screen"/>  -->
 </launch>
